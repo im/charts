@@ -16,12 +16,12 @@ jobs:
               with:
                 node-version: '16'
 
-            - name: 3. install pnpm..
+            - name: 3. pnpm install
               run: |
-                  npm install pnpm -g
+                  
                   pnpm i
 
-            - name: 4. build docs..
+            - name: 4. build pages..
               run: |
                   pnpm build
                   ls
