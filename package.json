@@ -11,23 +11,24 @@
         "fix": "eslint -c .eslintrc.js src/**/*.vue src/**/*.js src/**/*.ts --fix"
     },
     "dependencies": {
-        "@tangxiaomi/eslint-config": "^0.0.3",
-        "os": "^0.1.2",
+        "element-plus": "^2.3.3",
         "pinia": "^2.0.34",
         "stylus": "^0.59.0",
-        "vite-plugin-pages": "^0.29.0",
         "vue": "^3.2.47",
         "vue-router": "^4.1.6"
     },
     "devDependencies": {
+        "@tangxiaomi/eslint-config": "^0.0.3",
         "@types/node": "^18.15.12",
         "@vitejs/plugin-vue": "^4.1.0",
         "colors": "^1.4.0",
         "fs-extra": "^11.1.1",
         "moment": "^2.29.1",
+        "os": "^0.1.2",
         "prompt": "^1.2.0",
         "typescript": "^4.9.3",
         "vite": "^4.2.0",
+        "vite-plugin-pages": "^0.29.0",
         "vue-tsc": "^1.2.0",
         "yargs": "^17.7.1"
     }

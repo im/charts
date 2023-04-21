@@ -8,13 +8,27 @@ export default defineConfig({
     base: '/charts/',
     plugins: [
         vue(),
-        pages({
-            exclude: ['**/components/**/*.vue'],
-            dirs: 'src/components/pages/',
-        })
+        // pages({
+        //     exclude: ['**/components/**/*.vue'],
+        //     dirs: 'src/components/pages/',
+        // })
     ],
+    server: {
+        hmr: true
+    },
+    css: {
+        preprocessorOptions: {
+            stylus: {
+                globals: {
+                    '$color-g1': '#F3F4FC',
+                    '$color-white': '#FFFFFF',
+                },
+                additionalData: `@import "${resolve(__dirname, 'src/style/base/mixins.styl')}"`,
+            },
+        },
+    },
     resolve: {
-        extensions: ['.js', '.ts', '.vue'],
+        // extensions: ['.js', '.ts', '.vue'],
         alias: [
             {
                 find: '@',
@@ -23,6 +37,10 @@ export default defineConfig({
             {
                 find: 'stores',
                 replacement: resolve(__dirname, 'src/stores')
+            },
+            {
+                find: 'style',
+                replacement: resolve(__dirname, 'src/style')
             },
             {
                 find: 'components',

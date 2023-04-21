@@ -5,6 +5,6 @@
 * @since ${version}
 **/
 
-import ${ComponentName} from './${ComponentName}.vue'
-export * from './${ComponentName}.vue'
+import ${ComponentName} from './${componentName}.vue'
+export * from './${componentName}.vue'
 export default ${ComponentName}
