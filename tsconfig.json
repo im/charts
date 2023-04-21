@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "types": [
-            "element-plus/global"
+            "element-plus/global" 
         ],
         "target": "ESNext",
         "useDefineForClassFields": true,

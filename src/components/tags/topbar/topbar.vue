@@ -13,14 +13,31 @@
                 Charts
             </a>
         </h1>
-        <el-button size="large">
-            <i class="iconfont icon-jia"></i>新建图表
-        </el-button>
-    </div>
+        <div class="right">
+            <el-button size="large">
+                <i class="iconfont icon-jia"></i>新建图表
+            </el-button>
+            <el-button size="large">
+                <i class="iconfont icon-jia"></i>新建文件夹
+            </el-button>
+            <el-input
+                v-model="keyword"
+                size="large"
+                class="search"
+                placeholder="在当前页面搜索">
+                <template #prefix>
+                    <i class="iconfont icon-search-2-copy"></i>
+                </template>
+            </el-input>
+        </div>
+</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, } from 'vue'
+import { computed, ref } from 'vue'
+
+const keyword = ref('')
+
 </script>
 
 <style src="./topbar.styl" lang="stylus"></style>

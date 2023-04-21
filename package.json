@@ -11,6 +11,7 @@
         "fix": "eslint -c .eslintrc.js src/**/*.vue src/**/*.js src/**/*.ts --fix"
     },
     "dependencies": {
+        "@element-plus/icons-vue": "^2.1.0",
         "element-plus": "^2.3.3",
         "pinia": "^2.0.34",
         "stylus": "^0.59.0",

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@element-plus/icons-vue': ^2.1.0
   '@tangxiaomi/eslint-config': ^0.0.3
   '@types/node': ^18.15.12
   '@vitejs/plugin-vue': ^4.1.0
@@ -21,6 +22,7 @@ specifiers:
   yargs: ^17.7.1
 
 dependencies:
+  '@element-plus/icons-vue': 2.1.0_vue@3.2.47
   element-plus: 2.3.3_vue@3.2.47
   pinia: 2.0.34_hmuptsblhheur2tugfgucj7gc4
   stylus: 0.59.0
