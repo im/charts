@@ -15,6 +15,7 @@
 import { computed, } from 'vue'
 import getImg from '@/utils/getImg'
 import Topbar from '@/components/tags/topbar'
+console.log('=====')
 </script>
 
 <style src="./home.styl" lang="stylus" scoped></style>

@@ -2,10 +2,12 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 // import routes from '~pages'
 
-// import Home from '@/components/pages/home'
+import Home from '@/components/pages/home'
+
+console.log('==router===')
 
 const routes = [
-    { path: '/', component: import('@/components/pages/home') }
+    { path: '/', component: () => import('@/components/pages/home') }
 ]
 const router = createRouter({
     history: createWebHashHistory(),

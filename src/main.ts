@@ -5,11 +5,11 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import '@/style/normalize.css'
 import '@/style/app.styl'
-
 import App from './App.vue'
 
-const pinia = createPinia()
 const app = createApp(App)
+
+const pinia = createPinia()
 
 app.use(vueRouter)
 app.use(pinia)
