@@ -49112,8 +49112,9 @@ body .form-control::placeholder {
     top: 0;
     width: 100%;
     text-align: center;
-    padding-bottom: 2px;
+    
     border: none;
+    padding-bottom: 2px;
     border-bottom: 1px dashed #979797;
     background-color: transparent
 }

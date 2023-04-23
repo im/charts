@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="90px" height="76px" viewBox="0 0 90 76" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>文件夹</title>
+    <defs>
+        <path d="M0,5.83472842 C-3.94634045e-16,2.61229689 2.61229689,5.91951068e-16 5.83472842,0 L28.1223945,0 C29.5869836,-6.81678624e-16 30.9980102,0.550798911 32.0752816,1.54302249 L38,7 L84.1652716,7 C87.3877031,7 90,9.61229689 90,12.8347284 L90,70.1652716 C90,73.3877031 87.3877031,76 84.1652716,76 L5.83472842,76 C2.61229689,76 1.28281247e-15,73.3877031 0,70.1652716 L0,5.83472842 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="13" width="90" height="63" rx="6"></rect>
+        <filter x="-7.2%" y="-11.9%" width="114.4%" height="120.6%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 0.546092572   0 0 0 0 0.00784313725  0 0 0 0.3 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="文件夹" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="蒙版" fill="#FABE4D" xlink:href="#path-1"></use>
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <g id="蒙版">
+                <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-3"></use>
+                <use fill="#FFDB7E" fill-rule="evenodd" xlink:href="#path-3"></use>
+            </g>
+        </g>
+    </g>
+</svg>

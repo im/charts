@@ -17,7 +17,7 @@
             <el-button size="large">
                 <i class="iconfont icon-jia"></i>新建图表
             </el-button>
-            <el-button size="large">
+            <el-button size="large" @click="createFolder">
                 <i class="iconfont icon-jia"></i>新建文件夹
             </el-button>
             <el-input
@@ -35,8 +35,13 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
+import emitter from '@/utils/emitter'
 
 const keyword = ref('')
+
+const createFolder = () => {
+    emitter.emit('createFolder', '')
+}
 
 </script>
 

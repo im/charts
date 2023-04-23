@@ -27,6 +27,10 @@
                 "src/stores/*"
             ],
         },
+        "typeRoots": [
+            "node_modules/@types",
+            "typings"
+        ]
     },
     "include": [
         "src/*.vue",
