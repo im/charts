@@ -13,6 +13,8 @@
                 </template>
                 <el-empty v-if="!folders.length && !loading" description="当前内容为空" :image-size="200" />
             </div>
+
+            <ChartTemplate v-if="isShowChartTemplate" @close="isShowChartTemplate = false"></ChartTemplate>
         </div>
     </div>
 </template>
@@ -21,6 +23,7 @@
 import { ref, onMounted, computed, nextTick } from 'vue'
 import Topbar from '@/components/tags/topbar'
 import Folder from '@/components/tags/folder'
+import ChartTemplate from '@/components/tags/chartTemplate'
 import emitter from '@/utils/emitter'
 import { FolderObject } from '@/typings/folder'
 import { useFolderStore } from '@/stores/folder'
@@ -37,10 +40,11 @@ const routeId = computed(() => +route.params.id)
 const isFolder = computed(() => routeType.value === 'folder')
 const loading = ref(true)
 const editFolderId:any = ref(null)
+const isShowChartTemplate = ref(true)
 
 const currentFolder = computed(() => folders.value.find((v) => v.id === routeId.value))
 
-const handleCreate = async () => {
+const handleCreateFolder = async () => {
     const folder:any = {
         name: '未命名文件夹',
         createdTime: new Date().getTime(),
@@ -83,13 +87,22 @@ const delFolder = (folder: FolderObject) => {
         })
 }
 
+const handleCreateChart = () => {
+    isShowChartTemplate.value = true
+}
+
 emitter.on('createFolder', () => {
-    handleCreate()
+    handleCreateFolder()
+})
+
+emitter.on('createChart', () => {
+    handleCreateChart()
 })
 
 onMounted( async () => {
     await folderStore.update()
     loading.value = false
+
 })
 
 </script>

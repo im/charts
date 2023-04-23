@@ -1,8 +1,9 @@
 import mitt, { Emitter } from 'mitt'
 
 type Events = {
-    createFolder: string
-};
+    createFolder: string,
+    createChart: string
+}
 
 const emitter: Emitter<Events> = mitt<Events>()
 

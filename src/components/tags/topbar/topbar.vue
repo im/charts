@@ -17,7 +17,7 @@
             </a> -->
         </h1>
         <div class="right">
-            <el-button size="large">
+            <el-button size="large" @click="createChart">
                 <i class="iconfont icon-jia"></i>新建图表
             </el-button>
             <el-button v-if="!isFolder" size="large" @click="createFolder">
@@ -49,6 +49,10 @@ const keyword = ref('')
 
 const createFolder = () => {
     emitter.emit('createFolder', '')
+}
+
+const createChart = () => {
+    emitter.emit('createChart', '')
 }
 
 </script>

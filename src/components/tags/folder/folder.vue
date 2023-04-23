@@ -36,7 +36,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, defineProps, nextTick, onMounted, defineEmits } from 'vue'
-import getImg from '@/utils/getImg'
+import { getImg } from '@/utils/getImg'
 import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 
