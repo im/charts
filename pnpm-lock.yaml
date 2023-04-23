@@ -18,7 +18,6 @@ specifiers:
   prompt: ^1.2.0
   stylus: ^0.59.0
   typescript: ^4.9.3
-  uuid: ^9.0.0
   vite: ^4.2.0
   vite-plugin-pages: ^0.29.0
   vue: ^3.2.47
@@ -35,7 +34,6 @@ dependencies:
   momentjs: 2.0.0
   pinia: 2.0.34_hmuptsblhheur2tugfgucj7gc4
   stylus: 0.59.0
-  uuid: 9.0.0
   vue: 3.2.47
   vue-router: 4.1.6_vue@3.2.47
 
@@ -2172,11 +2170,6 @@ packages:
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
-
-  /uuid/9.0.0:
-    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
-    hasBin: true
-    dev: false
 
   /vite-plugin-pages/0.29.0_vite@4.2.2:
     resolution: {integrity: sha512-vRgLflQNMs8QnDB8A5XwX8b2XYSIN1Mdy3Bx7A7N9NTFeybRj/zpvoosdbMgJ3LsJ84AznHC3GytWQZGNpE5BA==}
