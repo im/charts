@@ -11,14 +11,14 @@
                 <template v-if="!isFolder">
                     <Folder v-for="item in folders" :key="item.id" :editId="editFolderId" :folder="item" @change="changeFolder" @del="delFolder" />
                 </template>
-                <el-empty v-if="!folders.length" description="当前内容为空" :image-size="200" />
+                <el-empty v-if="!folders.length && !loading" description="当前内容为空" :image-size="200" />
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, nextTick } from 'vue'
 import Topbar from '@/components/tags/topbar'
 import Folder from '@/components/tags/folder'
 import emitter from '@/utils/emitter'
@@ -48,6 +48,9 @@ const handleCreate = async () => {
     }
     const id = await folderStore.set(folder)
     editFolderId.value = id
+    setTimeout(() => {
+        editFolderId.value = ''
+    },100)
 }
 
 const handleBack = () => {
@@ -59,10 +62,6 @@ const changeFolder = (folder: FolderObject) => {
     current.name = folder.name
     current.updatedTime = new Date().getTime()
     folderStore.set(current)
-    // ElMessage({
-    //     message: '保存成功',
-    //     type: 'success',
-    // })
 }
 
 const delFolder = (folder: FolderObject) => {
