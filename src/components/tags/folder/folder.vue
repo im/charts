@@ -7,7 +7,7 @@
 
 <template>
     <div class="folder-box">
-        <div class="content">
+        <div class="content" @click="handleFolder">
             <img :src="getImg('folder-big.svg')" />
             <el-dropdown :teleported="false" @command="handleCommand">
                 <div class="operation">
@@ -20,7 +20,7 @@
                             编辑
                         </el-dropdown-item>
                         <el-dropdown-item command="del">
-                            <i class="iconfont icon-gengduo"></i>
+                            <i class="iconfont icon-shanchu"></i>
                             删除
                         </el-dropdown-item>
                     </el-dropdown-menu>
@@ -38,11 +38,18 @@
 import { computed, ref, defineProps, nextTick, onMounted, defineEmits } from 'vue'
 import getImg from '@/utils/getImg'
 import { ClickOutside as vClickOutside, ElMessage } from 'element-plus'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
     folder: {
         type: Object,
         default: () => ({})
+    },
+    editId: {
+        type: Number,
+        default: null
     }
 })
 
@@ -61,6 +68,16 @@ const handleEdit = () => {
 const handleSelect = () => {
     nextTick(() => {
         inputRef.value?.select()
+    })
+}
+
+const handleFolder = () => {
+    router.push({
+        name: 'home',
+        params: {
+            type: 'folder',
+            id: props.folder.id
+        }
     })
 }
 
@@ -86,7 +103,9 @@ const handleCommand = ( command:string ) => {
     }
 
     if (command === 'edit') {
-        handleEdit()
+        nextTick(() => {
+            handleEdit()
+        })
     }
 }
 
@@ -97,7 +116,7 @@ const onClickOutside = () => {
 onMounted(() => {
     name.value = props.folder.name
     cacheName.value = props.folder.name
-    props.folder.isEdit && handleEdit()
+    props.folder.id === props.editId && handleEdit()
 })
 
 </script>

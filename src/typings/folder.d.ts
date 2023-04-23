@@ -1,5 +1,5 @@
 export interface FolderObject {
-    id: string
+    id: number
     name: string
     createdTime: date
     updatedTime: date

@@ -7,7 +7,7 @@ import Home from '@/components/pages/home'
 console.log('==router===')
 
 const routes = [
-    { path: '/', component: () => import('@/components/pages/home') }
+    { name: 'home', path: '/:type?/:id?', component: () => import('@/components/pages/home') }
 ]
 const router = createRouter({
     history: createWebHashHistory(),

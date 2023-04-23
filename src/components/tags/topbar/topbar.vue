@@ -8,16 +8,19 @@
 <template>
     <div class="topbar">
         <h1 class="logo" title="charts">
-            <a href="/charts/">
+            <router-link tag="a" :to="{ name: 'home' }">
                 <img src="/logo.svg" alt="charts" />
                 Charts
-            </a>
+            </router-link>
+            <!-- <a href="/charts/">
+
+            </a> -->
         </h1>
         <div class="right">
             <el-button size="large">
                 <i class="iconfont icon-jia"></i>新建图表
             </el-button>
-            <el-button size="large" @click="createFolder">
+            <el-button v-if="!isFolder" size="large" @click="createFolder">
                 <i class="iconfont icon-jia"></i>新建文件夹
             </el-button>
             <el-input
@@ -36,6 +39,11 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import emitter from '@/utils/emitter'
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
+const routeType = computed(() => route.params.type)
+const isFolder = computed(() => routeType.value === 'folder')
 
 const keyword = ref('')
 

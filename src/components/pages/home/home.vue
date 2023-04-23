@@ -1,16 +1,18 @@
-<!--
-* Home
-* @author tangxiaomi <81195314@qq.com>
-* @date 2023-04-20 17:26:45
-* @since 0.0.0
--->
-
 <template>
     <div class="home">
         <Topbar />
-        <div class="wrapper">
-            <Folder v-for="item in folders" :key="item.id" :folder="item" @change="changeFolder" @del="delFolder" />
-            <el-empty v-if="!folders.length" description="没有数据" :image-size="200" />
+
+        <div v-loading="loading" class="wrapper">
+            <div v-if="isFolder && currentFolder" class="back" @click="handleBack">
+                <i class="iconfont icon-fanhui"></i>
+                {{ currentFolder.name }}
+            </div>
+            <div class="container">
+                <template v-if="!isFolder">
+                    <Folder v-for="item in folders" :key="item.id" :editId="editFolderId" :folder="item" @change="changeFolder" @del="delFolder" />
+                </template>
+                <el-empty v-if="!folders.length" description="当前内容为空" :image-size="200" />
+            </div>
         </div>
     </div>
 </template>
@@ -21,36 +23,46 @@ import Topbar from '@/components/tags/topbar'
 import Folder from '@/components/tags/folder'
 import emitter from '@/utils/emitter'
 import { FolderObject } from '@/typings/folder'
-import { v4 as uuid } from 'uuid'
 import { useFolderStore } from '@/stores/folder'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { useRouter, useRoute } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
 
 const folderStore = useFolderStore()
 const folders = computed(() => folderStore.list as FolderObject[])
+const routeType = computed(() => route.params.type)
+const routeId = computed(() => +route.params.id)
+const isFolder = computed(() => routeType.value === 'folder')
+const loading = ref(true)
+const editFolderId:any = ref(null)
 
-const handleCreate = () => {
-    const folder:FolderObject = {
-        id: uuid(),
+const currentFolder = computed(() => folders.value.find((v) => v.id === routeId.value))
+
+const handleCreate = async () => {
+    const folder:any = {
         name: '未命名文件夹',
         createdTime: new Date().getTime(),
         updatedTime: new Date().getTime()
     }
-    folders.value.unshift({
-        ...folder,
-        isEdit: true
-    })
-    folderStore.set(folder.id, folder)
+    const id = await folderStore.set(folder)
+    editFolderId.value = id
+}
+
+const handleBack = () => {
+    router.push({ name: 'home' })
 }
 
 const changeFolder = (folder: FolderObject) => {
     const current: any = folders.value.find(v => v.id === folder.id)
     current.name = folder.name
     current.updatedTime = new Date().getTime()
-    folderStore.set(folder.id, current)
-    ElMessage({
-        message: '保存成功',
-        type: 'success',
-    })
+    folderStore.set(current)
+    // ElMessage({
+    //     message: '保存成功',
+    //     type: 'success',
+    // })
 }
 
 const delFolder = (folder: FolderObject) => {
@@ -76,8 +88,9 @@ emitter.on('createFolder', () => {
     handleCreate()
 })
 
-onMounted(() => {
-    folderStore.update()
+onMounted( async () => {
+    await folderStore.update()
+    loading.value = false
 })
 
 </script>
