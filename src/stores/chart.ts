@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
-import { FolderObject } from '@/typings/folder'
+import { ChartObject } from '@/typings/chart'
 import Db from '@/utils/db'
 
-import { FOLDER_STORE_NAME } from '@/constants/db'
+import { CHART_STORE_NAME } from '@/constants/db'
 
 const ChartDb = Db()
 
-export const useFolderStore = defineStore('Folder', {
+export const useChartStore = defineStore('Chart', {
     state: () => {
         return {
             list: []
@@ -14,14 +14,14 @@ export const useFolderStore = defineStore('Folder', {
     },
     actions: {
         async update () {
-            const results:any = await (await ChartDb).getAllFromIndex(FOLDER_STORE_NAME, 'id')
-            this.list = (results || []).sort((a:FolderObject,b: FolderObject) => b.updatedTime - a.updatedTime)
+            const results:any = await (await ChartDb).getAllFromIndex(CHART_STORE_NAME, 'id')
+            this.list = (results || []).sort((a:ChartObject,b: ChartObject) => b.updatedTime - a.updatedTime)
         },
         async get (key: string) {
-            return await (await ChartDb).get(FOLDER_STORE_NAME, key)
+            return await (await ChartDb).get(CHART_STORE_NAME, key)
         },
         async set (data: any) {
-            const tx = (await ChartDb).transaction(FOLDER_STORE_NAME, 'readwrite')
+            const tx = (await ChartDb).transaction(CHART_STORE_NAME, 'readwrite')
             if (data.id) {
                 const index = tx.store.index('id')
                 for await (const cursor of index.iterate(data.id)) {
@@ -39,7 +39,7 @@ export const useFolderStore = defineStore('Folder', {
 
         },
         async del (key:number) {
-            const id = await (await ChartDb).delete(FOLDER_STORE_NAME, key)
+            const id = await (await ChartDb).delete(CHART_STORE_NAME, key)
             this.update()
         }
     },

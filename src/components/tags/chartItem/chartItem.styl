@@ -1,0 +1,73 @@
+/**
+* Folder
+* @author tangxiaomi <81195314@qq.com>
+* @date 2023-04-21 16:30:03
+* @since 0.0.0
+*/
+
+.chart-box
+    width: 140px
+    margin-bottom 20px
+    .content
+        padding: 14px 25px;
+        cursor pointer
+        position relative
+        transition: all 0.3s
+        background: #f2f2f5;
+
+        .operation
+            opacity 0
+        &:hover
+            border-radius: 4px;
+            .operation
+                opacity 1
+    .name
+        font-size: 14px;
+        color: #333;
+        line-height: 20px;
+        text-align: center;
+        .text
+            cursor pointer
+            display flex
+            align-items: center
+            justify-content: center
+            span
+                display block
+                width 80%
+                white-space: nowrap;
+                text-overflow: ellipsis
+                overflow hidden
+            .iconfont
+                display none
+                font-size: 14px
+                margin-left 5px
+            &:hover
+                .iconfont
+                    display inline-block
+        /deep/
+            .el-input__wrapper
+                border: 0
+                border-radius: 0
+                box-shadow none
+                text-align: center
+                padding-bottom: 2px;
+                border-bottom: 1px dashed #979797;
+            .el-input__inner
+                height 20px
+                font-size: 14px;
+                color: #333;
+                line-height: 20px;
+                text-align: center
+.operation
+    width 24px
+    height 24px
+    border-radius: 4px
+    background: #fff
+    text-align: center
+    line-height: 24px
+    position absolute
+    right -20px
+    top -10px
+    .iconfont
+        font-size: 22px
+

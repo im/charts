@@ -15,9 +15,13 @@
             <div v-for="chartType in chartTypes" :key="chartType.value">
                 <el-divider content-position="left">{{ chartType.label }}</el-divider>
                 <div class="chart-wrapper">
-                    <div v-for="chart in chartType.children" :key="chart.value" class="chart-block">
-                        {{ chart.label }} - {{ chart.value }}
-                        <PreviewImage :chart="chart" />
+                    <div v-for="chart in chartType.children" :key="chart.value" class="chart-block" @click="handleChart(chart)">
+                        <div class="preview">
+                            <PreviewImage :chart="chart" />
+                        </div>
+                        <div class="name-box">
+                            {{ chart.label }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -29,12 +33,24 @@
 import { computed, defineEmits, onMounted, ref } from 'vue'
 import PreviewImage from '@/components/tags/previewImage'
 import { getChartTypes } from '@/constants/chartType'
+import { useChartStore } from '@/stores/chart'
+import { ChartObject } from '@/typings/chart'
 
 const emits = defineEmits(['close'])
 const chartTypes = ref(getChartTypes())
-
+const chartStore = useChartStore()
 const handleClose = () => {
     emits('close')
+}
+
+const handleChart = async (chart:any) => {
+    const chartData:any = {
+        name: chart.label,
+        createdTime: new Date().getTime(),
+        updatedTime: new Date().getTime(),
+        type: chart.value
+    }
+    const id = await chartStore.set(chartData)
 }
 
 </script>
