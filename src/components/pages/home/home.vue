@@ -10,7 +10,7 @@
             <div class="container">
                 <template v-if="!isFolder">
                     <Folder v-for="item in folders" :key="item.id" :editId="editFolderId" :folder="item" @change="changeFolder" @del="delFolder" />
-                    <Chart v-for="item in charts" :key="item.id" :chart="item" />
+                    <Chart v-for="item in charts" :key="item.id" :chart="item" @change="changeChart" @del="delChart" />
                 </template>
             </div>
             <el-empty v-if="!folders.length && !loading" description="当前内容为空" :image-size="200" />
@@ -74,6 +74,13 @@ const changeFolder = (folder: FolderObject) => {
     folderStore.set(current)
 }
 
+const changeChart = (chart: ChartObject) => {
+    const current: any = folders.value.find(v => v.id === chart.id)
+    current.name = chart.name
+    current.updatedTime = new Date().getTime()
+    chartStore.set(current)
+}
+
 const delFolder = (folder: FolderObject) => {
     ElMessageBox.confirm(
         '确定要删除?',
@@ -86,6 +93,25 @@ const delFolder = (folder: FolderObject) => {
     )
         .then(() => {
             folderStore.del(folder.id)
+            ElMessage({
+                type: 'success',
+                message: '删除成功',
+            })
+        })
+}
+
+const delChart = (chart: ChartObject) => {
+    ElMessageBox.confirm(
+        '确定要删除?',
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            chartStore.del(chart.id)
             ElMessage({
                 type: 'success',
                 message: '删除成功',

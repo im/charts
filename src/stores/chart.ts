@@ -17,8 +17,10 @@ export const useChartStore = defineStore('Chart', {
             const results:any = await (await ChartDb).getAllFromIndex(CHART_STORE_NAME, 'id')
             this.list = (results || []).sort((a:ChartObject,b: ChartObject) => b.updatedTime - a.updatedTime)
         },
-        async get (key: string) {
-            return await (await ChartDb).get(CHART_STORE_NAME, key)
+        async get (id: number) {
+            const tx = (await ChartDb).transaction(CHART_STORE_NAME, 'readwrite')
+            const store = tx.store
+            return await store.get(+id)
         },
         async set (data: any) {
             const tx = (await ChartDb).transaction(CHART_STORE_NAME, 'readwrite')

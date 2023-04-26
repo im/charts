@@ -34,8 +34,9 @@ import { computed, defineEmits, onMounted, ref } from 'vue'
 import PreviewImage from '@/components/tags/previewImage'
 import { getChartTypes } from '@/constants/chartType'
 import { useChartStore } from '@/stores/chart'
-import { ChartObject } from '@/typings/chart'
+import { useRouter, useRoute } from 'vue-router'
 
+const router = useRouter()
 const emits = defineEmits(['close'])
 const chartTypes = ref(getChartTypes())
 const chartStore = useChartStore()
@@ -51,6 +52,16 @@ const handleChart = async (chart:any) => {
         type: chart.value
     }
     const id = await chartStore.set(chartData)
+    const { href } = router.resolve({
+        name: 'chart',
+        params: {
+            id
+        }
+    })
+    const { origin, pathname } = window.location
+    const url = origin + pathname + href
+    window.open(url, '_blank')
+    handleClose()
 }
 
 </script>

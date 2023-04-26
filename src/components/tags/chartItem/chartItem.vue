@@ -7,7 +7,7 @@
 
 <template>
      <div class="chart-box">
-        <div class="content">
+        <div class="content" @click="handleChart">
             <PreviewImage :chart="chart" />
             <el-dropdown :teleported="false" @command="handleCommand">
                 <div class="operation">
@@ -72,14 +72,16 @@ const handleSelect = () => {
     })
 }
 
-const handleFolder = () => {
-    router.push({
-        name: 'home',
+const handleChart = () => {
+    const { href } = router.resolve({
+        name: 'chart',
         params: {
-            type: 'folder',
             id: props.chart.id
         }
     })
+    const { origin, pathname } = window.location
+    const url = origin + pathname + href
+    window.open(url, '_blank')
 }
 
 const save = () => {
