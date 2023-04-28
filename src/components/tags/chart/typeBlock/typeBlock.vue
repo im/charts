@@ -7,12 +7,35 @@
 
 <template>
     <div class="type-block">
-        <h1>TypeBlock</h1>
+        <div v-for="chartType in chartTypes" :key="chartType.value">
+                <div class="tab" :class="{ open: chartType.open }" @click="open(chartType)">
+                    <i class="icon-sanjiaoyou iconfont"></i>
+                    {{ chartType.label }}
+                </div>
+                <div v-if="chartType.open" class="chart-wrapper">
+                    <div v-for="chart in chartType.children" :key="chart.value" class="chart-block">
+                        <div class="preview">
+                            <PreviewImage :chart="chart" />
+                        </div>
+                        <div class="name-box">
+                            {{ chart.label }}
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, } from 'vue'
+import { computed, ref } from 'vue'
+import { getChartTypes } from '@/constants/chartType'
+import PreviewImage from '@/components/tags/previewImage'
+
+const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
+
+const open = (chartType:any) => {
+    chartType.open = !chartType.open
+}
 </script>
 
 <style src="./typeBlock.styl" lang="stylus" scoped></style>

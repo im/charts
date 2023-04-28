@@ -7,7 +7,7 @@
 
 <template>
     <div class="chart-wrapper">
-        <Topbar></Topbar>
+        <Topbar :chart="chart"></Topbar>
         <div class="container">
             <TypeBlock></TypeBlock>
         <PreviewBlock></PreviewBlock>
