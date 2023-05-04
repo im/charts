@@ -7,28 +7,36 @@
 
 <template>
     <div class="preview-block">
-        <v-chart ref="chartRef" class="chart" autoresize :option="option" />
+        <!-- <v-chart class="chart" :option="option" /> -->
+        <hot-table :data="data" :minCols="40" licenseKey="non-commercial-and-evaluation" :minRows="40" :rowHeaders="true" :colHeaders="true"></hot-table>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart } from 'echarts/charts'
-import { useResizeObserver } from '@vueuse/core'
 import {
     TitleComponent,
     TooltipComponent,
-    LegendComponent,
-    GridComponent
+    LegendComponent
 } from 'echarts/components'
-
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 
+import { HotTable } from '@handsontable/vue3'
+import { registerAllModules } from 'handsontable/registry'
+import 'handsontable/dist/handsontable.full.css'
+// https://handsontable.com/docs/javascript-data-grid/vue3-installation/
+
+const data = ref([
+    ['', 'Ford', 'Volvo', 'Toyota', 'Honda'],
+    ['2016', 10, 11, 12, 13],
+    ['2017', 20, 11, 14, 13],
+    ['2018', 30, 15, 12, 13]
+])
+
 use([
-    GridComponent,
     CanvasRenderer,
     PieChart,
     LineChart,
@@ -37,9 +45,7 @@ use([
     LegendComponent
 ])
 
-provide(THEME_KEY, 'dark')
-
-const chartRef = ref<HTMLElement | null | any>(null)
+// provide(THEME_KEY, 'dark')
 
 // https://github.com/ecomfe/vue-echarts
 const option = ref({
@@ -81,10 +87,6 @@ const option = ref({
             }
         }
     ]
-})
-
-onMounted(() => {
-    console.dir(chartRef.value)
 })
 </script>
 

@@ -5,3 +5,8 @@ export interface ChartObject {
     updatedTime: date
     type: string
 }
+
+export interface ChartTypeObject {
+    label: string
+    value: string
+}

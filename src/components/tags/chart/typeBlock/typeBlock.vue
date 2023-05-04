@@ -13,7 +13,7 @@
                     {{ chartType.label }}
                 </div>
                 <div v-if="chartType.open" class="chart-wrapper">
-                    <div v-for="chart in chartType.children" :key="chart.value" class="chart-block">
+                    <div v-for="chart in chartType.children" :key="chart.value" :class="{ active: chart.value === props.chart.type }" class="chart-block" @click="handleType(chart)">
                         <div class="preview">
                             <PreviewImage :chart="chart" />
                         </div>
@@ -27,14 +27,28 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted , defineProps } from 'vue'
 import { getChartTypes } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
+import emitter from '@/utils/emitter'
 
 const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
 
 const open = (chartType:any) => {
     chartType.open = !chartType.open
+}
+
+const props = defineProps({
+    chart: {
+        type: Object,
+        default: () => ({})
+    }
+})
+
+const handleType = (data: any) => {
+    const current = { ...props.chart.value }
+    current.type = data.value
+    emitter.emit('updateChart', current)
 }
 </script>
 

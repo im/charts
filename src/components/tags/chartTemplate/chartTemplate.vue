@@ -35,6 +35,8 @@ import PreviewImage from '@/components/tags/previewImage'
 import { getChartTypes } from '@/constants/chartType'
 import { useChartStore } from '@/stores/chart'
 import { useRouter, useRoute } from 'vue-router'
+import { createConfig } from '@/chart/config'
+import { ChartTypeObject } from '@/typings/chart'
 
 const router = useRouter()
 const emits = defineEmits(['close'])
@@ -44,12 +46,13 @@ const handleClose = () => {
     emits('close')
 }
 
-const handleChart = async (chart:any) => {
+const handleChart = async (chart:ChartTypeObject) => {
     const chartData:any = {
         name: chart.label,
         createdTime: new Date().getTime(),
         updatedTime: new Date().getTime(),
-        type: chart.value
+        type: chart.value,
+        option: createConfig(chart)
     }
     const id = await chartStore.set(chartData)
     const { href } = router.resolve({

@@ -9,9 +9,9 @@
     <div class="chart-wrapper">
         <Topbar :chart="chart"></Topbar>
         <div class="container">
-            <TypeBlock></TypeBlock>
-        <PreviewBlock></PreviewBlock>
-        <SettingBlock></SettingBlock>
+            <TypeBlock :chart="chart"></TypeBlock>
+            <PreviewBlock :chart="chart"></PreviewBlock>
+            <SettingBlock :chart="chart"></SettingBlock>
         </div>
     </div>
 </template>
@@ -25,6 +25,7 @@ import Topbar from '@/components/tags/chart/topbar'
 import TypeBlock from '@/components/tags/chart/typeBlock'
 import PreviewBlock from '@/components/tags/chart/previewBlock'
 import SettingBlock from '@/components/tags/chart/settingBlock'
+import emitter from '@/utils/emitter'
 
 const chartStore = useChartStore()
 const route = useRoute()
@@ -35,6 +36,12 @@ const getChart = async () => {
     const data = await chartStore.get(id.value)
     chart.value = data
 }
+
+emitter.on('updateChart', async (data:any) => {
+    data.updatedTime = new Date().getTime()
+    await chartStore.set(data)
+    await getChart()
+})
 
 onMounted(() => {
     getChart()
