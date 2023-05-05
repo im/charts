@@ -7,7 +7,7 @@
 
 <template>
     <div class="folder-box">
-        <div class="content" @click="handleFolder">
+        <div class="content" @click.stop="handleFolder">
             <img :src="getImg('folder-big.svg')" />
             <el-dropdown :teleported="false" @command="handleCommand">
                 <div class="operation">
@@ -15,11 +15,11 @@
                 </div>
                 <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item command="edit">
+                        <el-dropdown-item command="edit" @click.stop>
                             <i class="iconfont icon-weibiaoti520"></i>
                             编辑
                         </el-dropdown-item>
-                        <el-dropdown-item command="del">
+                        <el-dropdown-item command="del" @click.stop>
                             <i class="iconfont icon-shanchu"></i>
                             删除
                         </el-dropdown-item>
