@@ -35,6 +35,7 @@ const chart = ref({} as ChartObject)
 const getChart = async () => {
     const data = await chartStore.get(id.value)
     chart.value = data
+    console.log('data: ', data)
 }
 
 emitter.on('updateChart', async (data:any) => {

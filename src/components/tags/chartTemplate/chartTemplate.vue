@@ -47,8 +47,7 @@ const handleClose = () => {
 }
 
 const handleChart = async (chart:ChartTypeObject) => {
-    const chartData:ChartObject = {
-        id: '',
+    const chartData:any = {
         name: chart.label,
         createdTime: new Date().getTime(),
         updatedTime: new Date().getTime(),

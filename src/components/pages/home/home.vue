@@ -111,6 +111,7 @@ const delChart = (chart: ChartObject) => {
         }
     )
         .then(() => {
+            // @ts-ignore
             chartStore.del(chart.id)
             ElMessage({
                 type: 'success',

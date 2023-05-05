@@ -46,9 +46,10 @@ const props = defineProps({
 })
 
 const handleType = (data: any) => {
-    const current = { ...props.chart.value }
+    const current:any = { ...props.chart }
     current.type = data.value
-    emitter.emit('updateChart', current)
+    console.log('current: ', current)
+    emitter.emit('updateChart', JSON.parse(JSON.stringify(current)))
 }
 </script>
 

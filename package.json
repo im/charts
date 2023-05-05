@@ -19,6 +19,7 @@
         "element-plus": "^2.3.3",
         "handsontable": "^12.3.3",
         "idb": "^7.1.1",
+        "loadsh": "^0.0.4",
         "mitt": "^3.0.0",
         "momentjs": "^2.0.0",
         "pinia": "^2.0.34",

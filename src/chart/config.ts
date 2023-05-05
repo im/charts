@@ -7,8 +7,6 @@ export function createConfig (chart: ChartTypeObject) {
     const data = DATAS[type]
 
     return {
-        title,
-        type,
         data,
     }
 }
