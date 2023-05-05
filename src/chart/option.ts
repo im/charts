@@ -1,12 +1,20 @@
-import { ChartObject } from '@/typings/chart'
+import { ChartObject, vChartType } from '@/typings/chart'
 // @ts-ignore
 import _ from 'loadsh'
 import OPTIONS from './options'
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
-    const chartType = OPTIONS[type].type
+    const chartType = OPTIONS[type]?.type
+    console.log('type: ', type)
+    console.log('OPTIONS: ', OPTIONS)
     return !!['bar', 'line'].includes(chartType)
+}
+
+const checkChartType = (chart:ChartObject, chartType: vChartType) => {
+    const { type } = chart
+    const optionType = OPTIONS[type].type
+    return optionType === chartType
 }
 
 const getXAxis = (chart:ChartObject) => {
@@ -28,10 +36,14 @@ const getXAxis = (chart:ChartObject) => {
 const getSeries = (chart:ChartObject) => {
     const { config, type } = chart
     const { data = [] } = config
-    const chartType = OPTIONS[type].type
+    const chartOption = OPTIONS[type]
+    const chartType = chartOption.type
+
     const series:any = []
-    if (isShowAxis(chart)) {
-        const chartData = JSON.parse(JSON.stringify(data))
+
+    const chartData = JSON.parse(JSON.stringify(data))
+
+    if (checkChartType(chart, 'line') || checkChartType(chart, 'bar')) {
         chartData[0].shift()
         const names = chartData[0]
         for (let i = 1; i < data.length; i++) {
@@ -46,6 +58,54 @@ const getSeries = (chart:ChartObject) => {
             series.push(obj)
         }
     }
+
+    if (checkChartType(chart, 'pie')) {
+        const obj:any = {
+            name: chartData[0].shift(),
+            radius: '50%',
+            data: [],
+            type: chartType
+        }
+        for (let i = 1; i < data.length; i++) {
+            const item = data[i]
+            const name = item.shift()
+            const value = item.shift()
+            obj.data.push({
+                value,
+                name
+            })
+
+        }
+        series.push(obj)
+    }
+
+    if (checkChartType(chart, 'ring')) {
+        const obj:any = {
+            name: chartData[0].shift(),
+            data: [],
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            type: 'pie'
+        }
+        console.log('obj: ', obj)
+        for (let i = 1; i < data.length; i++) {
+            const item = data[i]
+            const name = item.shift()
+            const value = item.shift()
+            obj.data.push({
+                value,
+                name
+            })
+
+        }
+        series.push(obj)
+    }
+
     return {
         series
     }
@@ -63,6 +123,7 @@ const getLegend = (chart:ChartObject) => {
         chartData[0].shift()
         legend.data = chartData[0]
     }
+
     return {
         legend
     }
@@ -83,8 +144,8 @@ export function createOption (data:ChartObject) {
     const xAxis = getXAxis(chart)
     const yAxis = getYAxis(chart)
     const series = getSeries(chart)
+    console.log('series: ', series)
     const legend = getLegend(chart)
-    console.log('legend: ', legend)
 
     const option = {
         ...xAxis,

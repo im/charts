@@ -1,7 +1,12 @@
 import { DYNAMIC_PREFIX, LINE_PREFIX } from './prefix'
 
-export type chartType = 'DYNAMIC_RANKING_BAR' | 'DYNAMIC_LINE_BAR_MIX' | 'LINE_BASICS'
+export type chartType = 'DYNAMIC_RANKING_BAR'
+| 'DYNAMIC_LINE_BAR_MIX'
+| 'LINE_BASICS'
+| 'BAR_BASICS'
+| 'PIE_BASICS'
 
+export type vChartType = 'bar' | 'line' | 'pie' | 'ring'
 export interface ChartConfigObject {
     data: array
 }

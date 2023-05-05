@@ -42,7 +42,13 @@ emitter.on('updateChart', async (data:any) => {
     data.updatedTime = new Date().getTime()
     await chartStore.set(data)
     await getChart()
+    broadcast()
 })
+
+const broadcast = () => {
+    const bc = new BroadcastChannel('chart')
+    bc.postMessage('updateChart')
+}
 
 onMounted(() => {
     getChart()

@@ -13,7 +13,7 @@
                     <Chart v-for="item in charts" :key="item.id" :chart="item" @change="changeChart" @del="delChart" />
                 </template>
             </div>
-            <el-empty v-if="!folders.length && !loading" description="当前内容为空" :image-size="200" />
+            <el-empty v-if="!folders.length && !charts.length && !loading" description="当前内容为空" :image-size="200" />
 
             <ChartTemplate v-if="isShowChartTemplate" @close="isShowChartTemplate = false"></ChartTemplate>
         </div>
@@ -132,11 +132,19 @@ emitter.on('createChart', () => {
     handleCreateChart()
 })
 
+const broadcast = () => {
+    const bc = new BroadcastChannel('chart')
+    bc.onmessage = async (event) => {
+        await folderStore.update()
+        await chartStore.update()
+    }
+}
+
 onMounted( async () => {
     await folderStore.update()
     await chartStore.update()
     loading.value = false
-
+    broadcast()
 })
 
 </script>

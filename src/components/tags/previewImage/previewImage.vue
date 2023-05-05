@@ -19,7 +19,11 @@ const props = defineProps({
     }
 })
 
-const url = computed(() => getChartImg((props.chart.value || props.chart.type) + '.gif'))
+const url = computed(() => {
+    const type = props.chart.value || props.chart.type
+    const suffix = ~type.indexOf('DYNAMIC_') ? '.gif' : '.jpg'
+    return getChartImg(type + suffix)
+})
 
 </script>
 
