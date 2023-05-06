@@ -1,3 +1,3 @@
 export default {
-    type: 'bar'
+    type: 'DYNAMIC_RANKING_BAR'
 }

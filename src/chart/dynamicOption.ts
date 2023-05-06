@@ -1,4 +1,4 @@
-import { ChartObject, vChartType } from '@/typings/chart'
+import { ChartObject, chartType } from '@/typings/chart'
 // @ts-ignore
 import _ from 'loadsh'
 import OPTIONS from './options'
@@ -6,10 +6,10 @@ import OPTIONS from './options'
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
     const chartType = OPTIONS[type]?.type
-    return !!['bar', 'line'].includes(chartType)
+    return !!['DYNAMIC_RANKING_BAR'].includes(chartType)
 }
 
-const checkChartType = (chart:ChartObject, chartType: vChartType) => {
+const checkChartType = (chart:ChartObject, chartType: chartType) => {
     const { type } = chart
     const optionType = OPTIONS[type].type
     return optionType === chartType
@@ -43,13 +43,13 @@ const getSeries = (chart:ChartObject) => {
 
     const chartData = _.cloneDeep(data)
 
-    if (checkChartType(chart, 'line') || checkChartType(chart, 'bar')) {
+    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
         chartData[0].shift()
         const names = chartData[0]
         names.forEach((name: string, index: number) => {
             const obj:any = {
                 name,
-                type: chartType,
+                type: 'bar',
                 // stack: 'Total',
                 data: []
             }
@@ -59,46 +59,6 @@ const getSeries = (chart:ChartObject) => {
             }
             series.push(obj)
         })
-    }
-
-    if (checkChartType(chart, 'pie')) {
-        const obj:any = {
-            name: chartData[0].shift(),
-            radius: '50%',
-            data: [],
-            type: chartType
-        }
-        const names = chartData[0]
-        names.forEach((name: string, index: number) => {
-            obj.data.push({
-                value: chartData[1][index + 1],
-                name
-            })
-        })
-        series.push(obj)
-    }
-
-    if (checkChartType(chart, 'ring')) {
-        const obj:any = {
-            name: chartData[0].shift(),
-            data: [],
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 2
-            },
-            type: 'pie'
-        }
-        const names = chartData[0]
-        names.forEach((name: string, index: number) => {
-            obj.data.push({
-                value: chartData[1][index + 1],
-                name
-            })
-        })
-        series.push(obj)
     }
 
     return {
@@ -139,7 +99,7 @@ const getYAxis = (chart:ChartObject) => {
 
 }
 
-export function createOption (data:ChartObject) {
+export function createDynamicOption (data:ChartObject) {
     const chart = _.cloneDeep(data)
     const xAxis = getXAxis(chart)
     const yAxis = getYAxis(chart)
@@ -163,5 +123,6 @@ export function createOption (data:ChartObject) {
             trigger: 'item',
         },
     }
+    console.log('option: ', option)
     return option
 }

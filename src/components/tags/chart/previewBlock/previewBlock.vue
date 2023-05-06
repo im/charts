@@ -29,6 +29,8 @@ import {
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 import { createOption } from '@/chart/option'
+import { DYNAMIC_PREFIX } from '@/constants/prefix'
+import { createDynamicOption } from '@/chart/dynamicOption'
 
 use([
     GridComponent,
@@ -54,7 +56,13 @@ provide(THEME_KEY, 'light')
 
 const chartRef:any = ref(null)
 
-const option:any = computed(() => props.chart.id ? createOption(props.chart) : {} )
+const option:any = computed(() => {
+    if ( props.chart.id) {
+        return ~props.chart.type.indexOf(DYNAMIC_PREFIX) ? createDynamicOption(props.chart) : createOption(props.chart)
+    } else {
+        return {}
+    }
+})
 
 const download = (str:string) => {
     const a = document.createElement('a')

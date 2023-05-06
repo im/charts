@@ -2,17 +2,17 @@ import { DYNAMIC_PREFIX, LINE_PREFIX , PIE_PREFIX, BAR_PREFIX,RING_PREFIX } from
 import { ChartTypeObject, chartType } from '@/typings/chart'
 
 export const CHART_TYPE_TEXT_MAP:any = {
-    // [DYNAMIC_PREFIX]: '动态图表',
+    [DYNAMIC_PREFIX]: '动态图表',
     [LINE_PREFIX]: '线形图',
     [BAR_PREFIX]: '柱状图',
     [PIE_PREFIX]: '饼图',
 }
 
 export const CHART_TYPE_MAP = {
-    // [`${DYNAMIC_PREFIX}RANKING_BAR`]: {
-    //     label: '动态排名变化图',
-    //     icon: 'icon-gengduo'
-    // },
+    [`${DYNAMIC_PREFIX}RANKING_BAR`]: {
+        label: '动态排名变化图',
+        icon: 'icon-gengduo'
+    },
     // [`${DYNAMIC_PREFIX}LINE_BAR_MIX`]: {
     //     label: '动态折线条形混合图',
     //     icon: 'icon-gengduo'

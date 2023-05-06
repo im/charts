@@ -7,6 +7,13 @@ export function createConfig (chart: ChartTypeObject) {
     const data = DATAS[type]
 
     return {
+        title,
         data,
+        animation: {
+            intervalTime: 1,
+            moveTime: 0.5,
+            startDelayTime: 0,
+            endDelayTime: 1,
+        }
     }
 }

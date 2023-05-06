@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, defineProps } from 'vue'
+import { computed, ref, defineProps, reactive } from 'vue'
 import DataTable from '@/components/tags/chart/dataTable'
 
 const props:any = defineProps({
