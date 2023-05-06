@@ -17,17 +17,6 @@
         </div>
 
         <div class="table-box">
-            <!-- <hot-table :data="data"
-                ref="hotTableComponent" :settings="hotSettings"
-                :minCols="40"
-                licenseKey="non-commercial-and-evaluation"
-                :minRows="40"
-                :manualRowMove="true"
-                :manualColumnMove="true"
-                :manualRowResize="true"
-                :manualColumnResize="true"
-                :rowHeaders="true"
-                :colHeaders="true"></hot-table> -->
             <hot-table
                 ref="hotTableComponent" :settings="hotSettings"></hot-table>
         </div>
@@ -46,6 +35,7 @@ import emitter from '@/utils/emitter'
 import * as XLSX from 'xlsx/xlsx.mjs'
 // @ts-ignore
 import _ from 'loadsh'
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 registerAllModules()
 
@@ -98,6 +88,7 @@ const beforeUpload = (file:any) => {
                 }
             }
             hotTableComponent.value.hotInstance.updateData(arr)
+            ElMessage.success('导出成功')
         }
         reader.readAsBinaryString(file)
     } catch (err) {

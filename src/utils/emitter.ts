@@ -5,6 +5,7 @@ type Events = {
     createFolder: string
     createChart: string
     updateChart: string
+    handleChart: string
 }
 
 const emitter: Emitter<Events> = mitt<Events>()

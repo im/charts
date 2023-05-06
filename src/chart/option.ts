@@ -108,8 +108,8 @@ const getLegend = (chart:ChartObject) => {
     const { config } = chart
     const { data = [] } = config
     const legend:any = {
-        orient: 'vertical',
-        left: 'left',
+        // orient: 'vertical',
+        bottom: '10',
     }
 
     if (isShowAxis(chart)) {
@@ -144,16 +144,19 @@ export function createOption (data:ChartObject) {
     const legend = getLegend(chart)
 
     const option = {
+        backgroundColor: '#fff',
         ...xAxis,
         ...yAxis,
         ...series,
         ...legend,
         title: {
             text: chart.name,
-            left: 'center'
+            left: '10',
+            top: '10',
         },
         grid: {
-            backgroundColor: '#fff' ,
+            // left: '60%'
+
         },
         tooltip: {
             trigger: 'item',

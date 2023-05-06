@@ -15,6 +15,7 @@
 
 <script lang="ts" setup>
 import { onMounted, computed } from 'vue'
+import emitter from '@/utils/emitter'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
@@ -47,51 +48,26 @@ const props:any = defineProps({
     }
 })
 // https://github.com/ecomfe/vue-echarts
+// https://blog.csdn.net/qq_43953273/article/details/121085281
 
 provide(THEME_KEY, 'light')
 
+const chartRef:any = ref(null)
+
 const option:any = computed(() => props.chart.id ? createOption(props.chart) : {} )
 
-// const option = ref({
-//     title: {
-//         text: 'Traffic Sources',
-//         left: 'center'
-//     },
-//     grid: {
-//         backgroundColor: 'transparent' ,
-//     },
-//     tooltip: {
-//         trigger: 'item',
-//         formatter: '{a} <br/>{b} : {c} ({d}%)'
-//     },
-//     legend: {
-//         orient: 'vertical',
-//         left: 'left',
-//         data: ['Direct', 'Email', 'Ad Networks', 'Video Ads', 'Search Engines']
-//     },
-//     series: [
-//         {
-//             name: 'Traffic Sources',
-//             type: 'pie',
-//             radius: '55%',
-//             center: ['50%', '60%'],
-//             data: [
-//                 { value: 335, name: 'Direct' },
-//                 { value: 310, name: 'Email' },
-//                 { value: 234, name: 'Ad Networks' },
-//                 { value: 135, name: 'Video Ads' },
-//                 { value: 1548, name: 'Search Engines' }
-//             ],
-//             emphasis: {
-//                 itemStyle: {
-//                     shadowBlur: 10,
-//                     shadowOffsetX: 0,
-//                     shadowColor: 'rgba(0, 0, 0, 0.5)'
-//                 }
-//             }
-//         }
-//     ]
-// })
+const download = (str:string) => {
+    const a = document.createElement('a')
+    a.download = props.chart.name + '.png'
+    a.href = str
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+}
+
+emitter.on('handleChart', (command) => {
+    download(chartRef.value?.getDataURL('awImage'))
+})
 
 </script>
 

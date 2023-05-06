@@ -14,9 +14,6 @@
                     <img src="/logo.svg" alt="charts" />
                     Charts
                 </router-link>
-                <!-- <a href="/charts/">
-
-                </a> -->
             </h1>
 
         </div>
@@ -25,18 +22,32 @@
                 <div class="name">{{ props.chart.name }}<i class="iconfont icon-weibiaoti520"></i></div>
             </div>
         </div>
-        <div class="right">{{ props.chart.name }}</div>
+        <div class="right">
+            <div class="operation">
+                <div class="item" @click="handleChart('download')">
+                    <div>
+                        <i class="iconfont icon-xiazai"></i>
+                        <div class="text">下载</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, defineProps } from 'vue'
+import emitter from '@/utils/emitter'
 const props = defineProps({
     chart: {
         type: Object,
         default: () => ({})
     }
 })
+
+const handleChart = (command:string) => {
+    emitter.emit('handleChart', command)
+}
 </script>
 
 <style src="./topbar.styl" lang="stylus" scoped></style>
