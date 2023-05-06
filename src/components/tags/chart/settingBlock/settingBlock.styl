@@ -9,3 +9,25 @@
     border-left: 1px solid #1f1f1f;
     height 100%
     width 240px
+    position relative
+    .data-table
+        position absolute
+        right 0
+        top 37px
+        width 400px
+        max-width 50vw
+        height calc(100% - 37px)
+        background: #323232
+        padding 10px
+.tabs
+    display flex
+    .item
+        width 50%
+        height 37px
+        line-height: 37px
+        text-align: center
+        cursor pointer
+        font-size: 12px
+        &.active
+            background: #323232
+            color #fff

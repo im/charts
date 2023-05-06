@@ -7,7 +7,9 @@
 
 <template>
     <div class="preview-block">
-        <v-chart ref="chartRef" class="chart" autoresize :option="option" />
+        <div class="v-chart-box">
+            <v-chart ref="chartRef" class="chart" autoresize :option="option" />
+        </div>
     </div>
 </template>
 
@@ -46,7 +48,7 @@ const props:any = defineProps({
 })
 // https://github.com/ecomfe/vue-echarts
 
-provide(THEME_KEY, 'dark')
+provide(THEME_KEY, 'light')
 
 const option:any = computed(() => props.chart.id ? createOption(props.chart) : {} )
 

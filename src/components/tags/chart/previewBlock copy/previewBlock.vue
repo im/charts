@@ -25,7 +25,7 @@ import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 
 import { HotTable } from '@handsontable/vue3'
-import { registerAllModules } from 'handsontable/registry'
+// import { registerAllModules } from 'handsontable/registry'
 import 'handsontable/dist/handsontable.full.css'
 // https://handsontable.com/docs/javascript-data-grid/vue3-installation/
 

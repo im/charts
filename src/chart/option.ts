@@ -6,8 +6,6 @@ import OPTIONS from './options'
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
     const chartType = OPTIONS[type]?.type
-    console.log('type: ', type)
-    console.log('OPTIONS: ', OPTIONS)
     return !!['bar', 'line'].includes(chartType)
 }
 
@@ -41,22 +39,24 @@ const getSeries = (chart:ChartObject) => {
 
     const series:any = []
 
-    const chartData = JSON.parse(JSON.stringify(data))
+    const chartData = _.cloneDeep(data)
 
     if (checkChartType(chart, 'line') || checkChartType(chart, 'bar')) {
         chartData[0].shift()
         const names = chartData[0]
-        for (let i = 1; i < data.length; i++) {
-            const item = data[i]
-            item.shift()
-            const obj = {
-                name: names[i],
+        names.forEach((name: string, index: number) => {
+            const obj:any = {
+                name,
                 type: chartType,
                 stack: 'Total',
-                data: item
+                data: []
+            }
+            for (let i = 1; i < chartData.length; i++) {
+                const item:any = chartData[i]
+                obj.data.push(item[index + 1])
             }
             series.push(obj)
-        }
+        })
     }
 
     if (checkChartType(chart, 'pie')) {
@@ -66,16 +66,13 @@ const getSeries = (chart:ChartObject) => {
             data: [],
             type: chartType
         }
-        for (let i = 1; i < data.length; i++) {
-            const item = data[i]
-            const name = item.shift()
-            const value = item.shift()
+        const names = chartData[0]
+        names.forEach((name: string, index: number) => {
             obj.data.push({
-                value,
+                value: chartData[1][index + 1],
                 name
             })
-
-        }
+        })
         series.push(obj)
     }
 
@@ -92,17 +89,13 @@ const getSeries = (chart:ChartObject) => {
             },
             type: 'pie'
         }
-        console.log('obj: ', obj)
-        for (let i = 1; i < data.length; i++) {
-            const item = data[i]
-            const name = item.shift()
-            const value = item.shift()
+        const names = chartData[0]
+        names.forEach((name: string, index: number) => {
             obj.data.push({
-                value,
+                value: chartData[1][index + 1],
                 name
             })
-
-        }
+        })
         series.push(obj)
     }
 
@@ -118,10 +111,13 @@ const getLegend = (chart:ChartObject) => {
         orient: 'vertical',
         left: 'left',
     }
+
     if (isShowAxis(chart)) {
-        const chartData = JSON.parse(JSON.stringify(data))
+
+        const chartData = _.cloneDeep(data)
         chartData[0].shift()
         legend.data = chartData[0]
+
     }
 
     return {
@@ -133,6 +129,7 @@ const getYAxis = (chart:ChartObject) => {
     const yAxis:any = {}
     if (isShowAxis(chart)) {
         yAxis.type = 'value'
+
     }
     return {
         yAxis
@@ -144,7 +141,6 @@ export function createOption (data:ChartObject) {
     const xAxis = getXAxis(chart)
     const yAxis = getYAxis(chart)
     const series = getSeries(chart)
-    console.log('series: ', series)
     const legend = getLegend(chart)
 
     const option = {
@@ -156,9 +152,9 @@ export function createOption (data:ChartObject) {
             text: chart.name,
             left: 'center'
         },
-        // grid: {
-        //     backgroundColor: 'transparent' ,
-        // },
+        grid: {
+            backgroundColor: '#fff' ,
+        },
         tooltip: {
             trigger: 'item',
             // formatter: '{a} <br/>{b} : {c} ({d}%)'

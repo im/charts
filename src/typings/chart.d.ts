@@ -5,6 +5,7 @@ export type chartType = 'DYNAMIC_RANKING_BAR'
 | 'LINE_BASICS'
 | 'BAR_BASICS'
 | 'PIE_BASICS'
+| 'RING_BASICS'
 
 export type vChartType = 'bar' | 'line' | 'pie' | 'ring'
 export interface ChartConfigObject {

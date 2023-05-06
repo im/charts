@@ -1,8 +1,9 @@
 import mitt, { Emitter } from 'mitt'
+import { ChartObject } from '@/typings/chart'
 
 type Events = {
-    createFolder: string,
-    createChart: string,
+    createFolder: string
+    createChart: string
     updateChart: string
 }
 

@@ -31,6 +31,8 @@ import { computed, ref, onMounted , defineProps } from 'vue'
 import { getChartTypes } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
 import emitter from '@/utils/emitter'
+// @ts-ignore
+import _ from 'loadsh'
 
 const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
 
@@ -48,7 +50,7 @@ const props = defineProps({
 const handleType = (data: any) => {
     const current:any = { ...props.chart }
     current.type = data.value
-    emitter.emit('updateChart', JSON.parse(JSON.stringify(current)))
+    emitter.emit('updateChart', _.cloneDeep(current))
 }
 </script>
 
