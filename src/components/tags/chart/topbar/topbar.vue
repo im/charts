@@ -7,12 +7,24 @@
 
 <template>
     <div class="topbar">
+
         <div class="left">
+            <h1 class="logo" title="charts">
+                <router-link tag="a" :to="{ name: 'home' }">
+                    <img src="/logo.svg" alt="charts" />
+                    Charts
+                </router-link>
+                <!-- <a href="/charts/">
+
+                </a> -->
+            </h1>
+
+        </div>
+        <div class="center">
             <div class="name-box">
                 <div class="name">{{ props.chart.name }}<i class="iconfont icon-weibiaoti520"></i></div>
             </div>
         </div>
-        <div class="center">{{ props.chart.name }}</div>
         <div class="right">{{ props.chart.name }}</div>
     </div>
 </template>

@@ -26,7 +26,8 @@
         "stylus": "^0.59.0",
         "vue": "^3.2.47",
         "vue-echarts": "^6.5.5",
-        "vue-router": "^4.1.6"
+        "vue-router": "^4.1.6",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@tangxiaomi/eslint-config": "^0.0.3",

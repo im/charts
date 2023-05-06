@@ -9,17 +9,35 @@ export const CHART_TYPE_TEXT_MAP:any = {
 }
 
 export const CHART_TYPE_MAP = {
-    [`${DYNAMIC_PREFIX}RANKING_BAR`]: '动态排名变化图',
-    [`${DYNAMIC_PREFIX}LINE_BAR_MIX`]: '动态折线条形混合图',
-    [`${LINE_PREFIX}BASICS`]: '基础折线图',
-    [`${PIE_PREFIX}BASICS`]: '基础饼图',
-    [`${BAR_PREFIX}BASICS`]: '基础柱状图',
-    [`${RING_PREFIX}BASICS`]: '基础环形图',
+    // [`${DYNAMIC_PREFIX}RANKING_BAR`]: {
+    //     label: '动态排名变化图',
+    //     icon: 'icon-gengduo'
+    // },
+    // [`${DYNAMIC_PREFIX}LINE_BAR_MIX`]: {
+    //     label: '动态折线条形混合图',
+    //     icon: 'icon-gengduo'
+    // },
+    [`${LINE_PREFIX}BASICS`]: {
+        label: '基础折线图',
+        icon: 'icon-zhexiantu'
+    },
+    [`${PIE_PREFIX}BASICS`]: {
+        label: '基础饼图',
+        icon: 'icon-bingtu'
+    },
+    [`${BAR_PREFIX}BASICS`]: {
+        label: '基础柱状图',
+        icon: 'icon-chartcolumn'
+    },
+    [`${RING_PREFIX}BASICS`]: {
+        label: '基础环形图',
+        icon: 'icon-huanxingtu'
+    },
 }
 
 const PIE_CHARTS = [`${PIE_PREFIX}BASICS`,`${RING_PREFIX}BASICS`,]
 
-const chartTypeOptions = Object.keys(CHART_TYPE_MAP).map(key => ({ label: CHART_TYPE_MAP[key], value: key as chartType }))
+export const chartTypeOptions = Object.keys(CHART_TYPE_MAP).map(key => ({ label: CHART_TYPE_MAP[key].label, icon: CHART_TYPE_MAP[key].icon, value: key as chartType }))
 
 export const getChartTypes = () => {
     return Object.keys(CHART_TYPE_TEXT_MAP).map((key:string) => {

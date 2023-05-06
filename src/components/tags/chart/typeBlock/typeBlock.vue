@@ -6,29 +6,42 @@
 -->
 
 <template>
-    <div class="type-block">
-        <div v-for="chartType in chartTypes" :key="chartType.value">
-                <div class="tab" :class="{ open: chartType.open }" @click="open(chartType)">
-                    <i class="icon-sanjiaoyou iconfont"></i>
-                    {{ chartType.label }}
-                </div>
-                <div v-if="chartType.open" class="chart-wrapper">
-                    <div v-for="chart in chartType.children" :key="chart.value" :class="{ active: chart.value === props.chart.type }" class="chart-block" @click="handleType(chart)">
-                        <div class="preview">
-                            <PreviewImage :chart="chart" />
-                        </div>
-                        <div class="name-box">
-                            {{ chart.label }}
+    <div class="type-block" :class="{ expand: expand }">
+        <div class="chart-list">
+                <div v-for="chartType in chartTypes" v-show="expand" :key="chartType.value">
+                    <div class="tab" :class="{ open: chartType.open }" @click="open(chartType)">
+                        <i class="icon-sanjiaoyou iconfont"></i>
+                        {{ chartType.label }}
+                    </div>
+                    <div v-if="chartType.open" class="chart-wrapper">
+                        <div v-for="chart in chartType.children" :key="chart.value" :class="{ active: chart.value === props.chart.type }" class="chart-block" @click="handleType(chart)">
+                            <div class="preview">
+                                <PreviewImage :chart="chart" />
+                            </div>
+                            <div class="name-box">
+                                {{ chart.label }}
+                            </div>
                         </div>
                     </div>
                 </div>
+            <div v-show="!expand" class="chart-nav">
+                <div v-for="chart in chartTypeOptions" :key="chart.value" :class="{ active: chart.value === props.chart.type }" @click="handleType(chart)">
+                    <i class="iconfont" :class="[chart.icon]"></i>
+                </div>
             </div>
+        </div>
+        <div class="bottom" @click="expand = !expand">
+            <div>
+                <i class="iconfont icon-shouqi"></i>
+                <span v-if="expand" class="text">收起</span>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, onMounted , defineProps } from 'vue'
-import { getChartTypes } from '@/constants/chartType'
+import { getChartTypes, chartTypeOptions } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
 import emitter from '@/utils/emitter'
 // @ts-ignore
@@ -39,6 +52,8 @@ const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } 
 const open = (chartType:any) => {
     chartType.open = !chartType.open
 }
+
+const expand = ref(false)
 
 const props = defineProps({
     chart: {

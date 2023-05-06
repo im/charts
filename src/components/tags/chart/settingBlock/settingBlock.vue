@@ -46,7 +46,7 @@ const viewList: Array<viewObj> = [{
     label: '编辑图表'
 }]
 
-const view = ref('data')
+const view = ref('chart')
 
 const handleView = (v: viewType) => {
     view.value = v

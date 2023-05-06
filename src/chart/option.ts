@@ -48,12 +48,12 @@ const getSeries = (chart:ChartObject) => {
             const obj:any = {
                 name,
                 type: chartType,
-                stack: 'Total',
+                // stack: 'Total',
                 data: []
             }
             for (let i = 1; i < chartData.length; i++) {
                 const item:any = chartData[i]
-                obj.data.push(item[index + 1])
+                obj.data.push(+item[index + 1])
             }
             series.push(obj)
         })

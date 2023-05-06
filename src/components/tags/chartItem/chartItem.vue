@@ -73,15 +73,21 @@ const handleSelect = () => {
 }
 
 const handleChart = () => {
-    const { href } = router.resolve({
+    router.push({
         name: 'chart',
         params: {
             id: props.chart.id
         }
     })
-    const { origin, pathname } = window.location
-    const url = origin + pathname + href
-    window.open(url, '_blank')
+    // const { href } = router.resolve({
+    //     name: 'chart',
+    //     params: {
+    //         id: props.chart.id
+    //     }
+    // })
+    // const { origin, pathname } = window.location
+    // const url = origin + pathname + href
+    // window.open(url, '_blank')
 }
 
 const save = () => {

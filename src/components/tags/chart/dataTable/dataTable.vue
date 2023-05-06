@@ -7,7 +7,14 @@
 
 <template>
     <div class="table-wrapper">
-        <div class="toolbar">toolbar</div>
+        <div class="toolbar">
+            <div class="left">
+                <el-upload :before-upload="beforeUpload">
+                    <el-button type="primary" class="import-btn">导入数据</el-button>
+                </el-upload>
+                <el-button plain type="primary" @click="exportData">下载数据</el-button>
+            </div>
+        </div>
 
         <div class="table-box">
             <!-- <hot-table :data="data"
@@ -36,6 +43,8 @@ import 'handsontable/dist/handsontable.full.css'
 import 'handsontable/languages/zh-CN'
 import emitter from '@/utils/emitter'
 // @ts-ignore
+import * as XLSX from 'xlsx/xlsx.mjs'
+// @ts-ignore
 import _ from 'loadsh'
 
 registerAllModules()
@@ -56,7 +65,7 @@ watch(() => tableData.value, () => {
     hotTableComponent.value.hotInstance.updateData(_.cloneDeep(tableData.value))
 }, { deep: true } )
 
-const afterChange = () => {
+const updateData = () => {
     nextTick(() => {
         const sourceData = hotTableComponent.value.hotInstance.getSourceData()
         const datas = sourceData.map((arr:any) => {
@@ -69,6 +78,37 @@ const afterChange = () => {
             emitter.emit('updateChart', _.cloneDeep(current))
         }
     })
+}
+
+const beforeUpload = (file:any) => {
+    try {
+        const reader = new FileReader()
+        reader.onload = (e:any) => {
+            const data = e.target.result
+            const workbook:any = XLSX.read(data, { type: 'binary' })
+            const worksheet:any = workbook.Sheets[workbook.SheetNames[0]]
+            const range = XLSX.utils.decode_range(worksheet['!ref'])
+            var arr:any = []
+            for (let row = range.s.r; row <= range.e.r; row++) {
+                let i = arr.length
+                arr.push([])
+                for (let col = range.s.c; col <= range.e.c; col++) {
+                    let cell:any = worksheet[XLSX.utils.encode_cell({ r: row, c: col })]
+                    cell && arr[i].push(cell.v)
+                }
+            }
+            hotTableComponent.value.hotInstance.updateData(arr)
+        }
+        reader.readAsBinaryString(file)
+    } catch (err) {
+        console.log('err: ', err)
+    }
+    return false
+}
+
+const exportData = () => {
+    const exportPlugin = hotTableComponent.value.hotInstance.getPlugin('exportFile')
+    exportPlugin.downloadFile('csv', { filename: props.chart.name })
 }
 
 onMounted(() => {
@@ -104,7 +144,19 @@ const hotSettings = computed(() => {
         // filters: true,
         manualRowMove: true,
         afterChange () {
-            afterChange()
+            updateData()
+        },
+        afterCreateCol () {
+            updateData()
+        },
+        afterCreateRow () {
+            updateData()
+        },
+        afterRemoveCol () {
+            updateData()
+        },
+        afterRemoveRow () {
+            updateData()
         },
         // dropdownMenu: true,
         contextMenu: {
@@ -144,12 +196,12 @@ const hotSettings = computed(() => {
                     name: '剪切'
                 },
                 separator: Handsontable.plugins.ContextMenu.SEPARATOR,
-                clear_custom: {
-                    name: '清空所有单元格数据',
-                    callback: function () {
-                        // this.clear()
-                    }
-                }
+                // clear_custom: {
+                //     name: '清空所有单元格数据',
+                //     callback: function () {
+                //         // this.clear()
+                //     }
+                // }
             }
         }
     }
