@@ -138,6 +138,17 @@ const getYAxis = (chart:ChartObject) => {
     return {}
 
 }
+const getTitle = (chart:ChartObject) => {
+    const title = chart?.config?.title
+    return {
+        title: {
+            show: title.show,
+            text: title.value,
+            left: 10,
+            top: 10
+        }
+    }
+}
 
 export function createOption (data:ChartObject) {
     const chart = _.cloneDeep(data)
@@ -145,6 +156,7 @@ export function createOption (data:ChartObject) {
     const yAxis = getYAxis(chart)
     const series = getSeries(chart)
     const legend = getLegend(chart)
+    const title = getTitle(chart)
 
     const option = {
         backgroundColor: '#fff',
@@ -152,11 +164,12 @@ export function createOption (data:ChartObject) {
         ...yAxis,
         ...series,
         ...legend,
-        title: {
-            text: chart.name,
-            left: '10',
-            top: '10',
-        },
+        ...title,
+        // title: {
+        //     text: chart.name,
+        //     left: '10',
+        //     top: '10',
+        // },
         grid: {
         },
         tooltip: {

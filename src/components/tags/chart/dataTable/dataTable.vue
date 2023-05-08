@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, nextTick, ref, onMounted, watch, defineProps } from 'vue'
+import { computed, nextTick, ref, onMounted, watch,inject, defineProps } from 'vue'
 import { HotTable } from '@handsontable/vue3'
 import { registerAllModules } from 'handsontable/registry'
 import Handsontable from 'handsontable'
@@ -42,14 +42,11 @@ registerAllModules()
 // https://handsontable.com/docs/javascript-data-grid/configuration-options/
 
 const hotTableComponent:any = ref(null)
-const tableData = computed(() => props.chart?.config?.data || null)
+const tableData = computed(() => CHART?.value.config?.data || null)
 
-const props:any = defineProps({
-    chart: {
-        type: Object,
-        default: () => ({})
-    }
-})
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
+const CHART = injectStrict(ChartKey)
 
 watch(() => tableData.value, () => {
     hotTableComponent.value.hotInstance.updateData(_.cloneDeep(tableData.value))
@@ -63,7 +60,7 @@ const updateData = () => {
         }).filter((v:any) => v.length)
         const isEqual = _.isEqual(datas, tableData.value)
         if (tableData.value && !isEqual && datas.length) {
-            const current:any = { ...props.chart }
+            const current:any = { ...CHART?.value }
             current.config.data = datas
             emitter.emit('updateChart', _.cloneDeep(current))
         }
@@ -99,7 +96,7 @@ const beforeUpload = (file:any) => {
 
 const exportData = () => {
     const exportPlugin = hotTableComponent.value.hotInstance.getPlugin('exportFile')
-    exportPlugin.downloadFile('csv', { filename: props.chart.name })
+    exportPlugin.downloadFile('csv', { filename: CHART?.value.name })
 }
 
 onMounted(() => {

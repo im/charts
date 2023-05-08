@@ -1,0 +1,50 @@
+/**
+* Widget
+* @author tangxiaomi <81195314@qq.com>
+* @date 2023-05-08 08:55:01
+* @since 0.0.0
+*/
+
+.widget
+    &.open
+        .content
+            padding:16px;
+            height: auto
+            opacity 1
+        .top
+            .iconfont
+                transform: rotate(90deg);
+.top
+    padding: 0 16px;
+    height: 36px;
+    background-color: #252626;
+    cursor: pointer;
+    border: none;
+    border-top: 1px solid #151515;
+    font-size: 12px
+    display flex
+    align-items: center
+    justify-content: space-between
+    transition: 0.3s
+    &:hover
+        background #1c1c1c
+        color #fff
+    .iconfont
+        font-size: 12px
+        transform: rotate(-90deg);
+        transition: 0.3s
+        font-weight: bold
+.content
+    transition: 0.4s
+    padding 0 16px
+    opacity 0
+    height 0
+    overflow hidden
+    /deep/
+        .el-input,.el-input__inner,.el-input__wrapper
+            background-color: #19191a;
+            border 0
+            box-shadow: none
+            color #fff
+
+    

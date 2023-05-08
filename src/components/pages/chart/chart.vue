@@ -6,18 +6,18 @@
 -->
 
 <template>
-    <div class="chart-wrapper">
-        <Topbar :chart="chart"></Topbar>
-        <div class="container">
-            <TypeBlock :chart="chart"></TypeBlock>
-            <PreviewBlock :chart="chart"></PreviewBlock>
-            <SettingBlock :chart="chart"></SettingBlock>
+    <div class="chart-wrapper" :loading="loading">
+        <Topbar v-if="!loading"></Topbar>
+        <div v-if="!loading" class="container">
+            <TypeBlock></TypeBlock>
+            <PreviewBlock></PreviewBlock>
+            <SettingBlock></SettingBlock>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, provide, readonly } from 'vue'
 import { useChartStore } from '@/stores/chart'
 import { useRouter, useRoute } from 'vue-router'
 import { ChartObject } from '@/typings/chart'
@@ -26,16 +26,22 @@ import TypeBlock from '@/components/tags/chart/typeBlock'
 import PreviewBlock from '@/components/tags/chart/previewBlock'
 import SettingBlock from '@/components/tags/chart/settingBlock'
 import emitter from '@/utils/emitter'
+import { ChartKey } from '@/utils/symbols'
 
 const chartStore = useChartStore()
 const route = useRoute()
 const id = computed(() => +route.params.id)
-const chart = ref({} as ChartObject)
+const CHART = ref({} as ChartObject)
+const loading = ref(true)
+
+// https://juejin.cn/post/7000339697142595592
 
 const getChart = async () => {
     const data: ChartObject = await chartStore.get(id.value)
-    chart.value = data
+    CHART.value = data
 }
+
+provide(ChartKey, readonly(CHART))
 
 emitter.on('updateChart', async (data:any) => {
     data.updatedTime = new Date().getTime()
@@ -49,8 +55,9 @@ const broadcast = () => {
     bc.postMessage('updateChart')
 }
 
-onMounted(() => {
-    getChart()
+onMounted(async () => {
+    await getChart()
+    loading.value = false
 })
 
 </script>

@@ -12,17 +12,14 @@
                 <img src="/logo.svg" alt="charts" />
                 Charts
             </router-link>
-            <!-- <a href="/charts/">
-
-            </a> -->
         </h1>
         <div class="right">
             <el-button size="large" @click="createChart">
                 <i class="iconfont icon-jia"></i>新建图表
             </el-button>
-            <el-button v-if="!isFolder" size="large" @click="createFolder">
+            <!-- <el-button v-if="!isFolder" size="large" @click="createFolder">
                 <i class="iconfont icon-jia"></i>新建文件夹
-            </el-button>
+            </el-button> -->
             <el-input
                 v-model="keyword"
                 size="large"

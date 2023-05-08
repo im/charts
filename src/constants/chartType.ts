@@ -11,7 +11,7 @@ export const CHART_TYPE_TEXT_MAP:any = {
 export const CHART_TYPE_MAP = {
     [`${DYNAMIC_PREFIX}RANKING_BAR`]: {
         label: '动态排名变化图',
-        icon: 'icon-gengduo'
+        icon: 'icon-paiming'
     },
     // [`${DYNAMIC_PREFIX}LINE_BAR_MIX`]: {
     //     label: '动态折线条形混合图',

@@ -14,7 +14,7 @@
                         {{ chartType.label }}
                     </div>
                     <div v-if="chartType.open" class="chart-wrapper">
-                        <div v-for="chart in chartType.children" :key="chart.value" :class="{ active: chart.value === props.chart.type }" class="chart-block" @click="handleType(chart)">
+                        <div v-for="chart in chartType.children" :key="chart.value" :class="{ active: chart.value === CHART.type }" class="chart-block" @click="handleType(chart)">
                             <div class="preview">
                                 <PreviewImage :chart="chart" />
                             </div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             <div v-show="!expand" class="chart-nav">
-                <div v-for="chart in chartTypeOptions" :key="chart.value" :class="{ active: chart.value === props.chart.type }" @click="handleType(chart)">
+                <div v-for="chart in chartTypeOptions" :key="chart.value" :class="{ active: chart.value === CHART.type }" @click="handleType(chart)">
                     <i class="iconfont" :class="[chart.icon]"></i>
                 </div>
             </div>
@@ -40,32 +40,28 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted , defineProps } from 'vue'
-import { getChartTypes, chartTypeOptions } from '@/constants/chartType'
+import { computed, ref, onMounted , defineProps, inject } from 'vue'
+import { getChartTypes, chartTypeOptions, } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
 import emitter from '@/utils/emitter'
 // @ts-ignore
 import _ from 'loadsh'
 
-const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
+const CHART = injectStrict(ChartKey)
 
+const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
 const open = (chartType:any) => {
     chartType.open = !chartType.open
 }
 
 const expand = ref(false)
 
-const props = defineProps({
-    chart: {
-        type: Object,
-        default: () => ({})
-    }
-})
-
 const handleType = (data: any) => {
-    const current:any = { ...props.chart }
+    const current:any = _.cloneDeep(CHART?.value)
     current.type = data.value
-    emitter.emit('updateChart', _.cloneDeep(current))
+    emitter.emit('updateChart', current)
 }
 </script>
 

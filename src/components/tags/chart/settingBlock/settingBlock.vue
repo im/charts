@@ -11,27 +11,24 @@
             <div v-for="item in viewList" :key="item.value" class="item" :class="{ active: view === item.value }" @click="handleView(item.value)">{{ item.label }}</div>
        </div>
        <div v-if="view === 'data'" class="data-table">
-            <DataTable :chart="chart"></DataTable>
+            <DataTable></DataTable>
        </div>
 
-       <div v-if="view === 'chart'" class="chart-setting">
-        chart
+       <div v-if="view === 'setting'" class="chart-setting">
+            <Setting></Setting>
        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, defineProps, reactive } from 'vue'
+import { computed, ref, defineProps, reactive, inject } from 'vue'
 import DataTable from '@/components/tags/chart/dataTable'
+import Setting from '@/components/tags/chart/setting'
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
+const CHART = injectStrict(ChartKey)
 
-const props:any = defineProps({
-    chart: {
-        type: Object,
-        default: () => ({})
-    }
-})
-
-type viewType = 'data' | 'chart'
+type viewType = 'data' | 'setting'
 
 type viewObj = {
     value: viewType
@@ -42,11 +39,11 @@ const viewList: Array<viewObj> = [{
     value: 'data',
     label: '编辑数据'
 }, {
-    value: 'chart',
+    value: 'setting',
     label: '编辑图表'
 }]
 
-const view = ref('chart')
+const view = ref('setting')
 
 const handleView = (v: viewType) => {
     view.value = v

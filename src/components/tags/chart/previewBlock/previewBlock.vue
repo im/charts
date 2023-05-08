@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, inject } from 'vue'
 import emitter from '@/utils/emitter'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
+import { ChartObject } from '@/typings/chart'
 import {
     TitleComponent,
     TooltipComponent,
@@ -42,13 +43,9 @@ use([
     TooltipComponent,
     LegendComponent
 ])
-
-const props:any = defineProps({
-    chart: {
-        type: Object,
-        default: () => ({})
-    }
-})
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
+const CHART = injectStrict(ChartKey)
 // https://github.com/ecomfe/vue-echarts
 // https://blog.csdn.net/qq_43953273/article/details/121085281
 
@@ -57,8 +54,8 @@ provide(THEME_KEY, 'light')
 const chartRef:any = ref(null)
 
 const option:any = computed(() => {
-    if ( props.chart.id) {
-        return ~props.chart.type.indexOf(DYNAMIC_PREFIX) ? createDynamicOption(props.chart) : createOption(props.chart)
+    if ( CHART?.value.id) {
+        return ~CHART.value.type.indexOf(DYNAMIC_PREFIX) ? createDynamicOption(CHART.value) : createOption(CHART.value)
     } else {
         return {}
     }
@@ -66,7 +63,7 @@ const option:any = computed(() => {
 
 const download = (str:string) => {
     const a = document.createElement('a')
-    a.download = props.chart.name + '.png'
+    a.download = CHART?.value.name + '.png'
     a.href = str
     document.body.appendChild(a)
     a.click()

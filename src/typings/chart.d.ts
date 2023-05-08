@@ -8,9 +8,27 @@ export type chartType = 'DYNAMIC_RANKING_BAR'
 | 'RING_BASICS'
 
 export type vChartType = 'bar' | 'line' | 'pie' | 'ring'
+
+export interface ChartConfigAnimationObject {
+    intervalTime: number
+    moveTime: number
+    startDelayTime: number
+    endDelayTime: number
+}
+
+export interface ChartConfigTitleObject {
+    show: boolean
+    value: string
+}
 export interface ChartConfigObject {
+    title: ChartConfigTitleObject
+    animation: ChartConfigAnimationObject
     data: array
 }
+
+export type ChartConfigKeys = typeof ChartConfigObject
+
+export type ChartConfigValues = ChartConfigTitleObject | ChartConfigAnimationObject
 
 export interface ChartObject {
     id: number | string
