@@ -17,6 +17,7 @@
         "@vueuse/core": "^10.1.2",
         "echarts": "^5.4.2",
         "element-plus": "^2.3.3",
+        "gifshot": "^0.4.5",
         "handsontable": "^12.3.3",
         "idb": "^7.1.1",
         "loadsh": "^0.0.4",

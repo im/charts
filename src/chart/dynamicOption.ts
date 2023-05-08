@@ -19,18 +19,33 @@ const getXAxis = (chart:ChartObject) => {
     const { config } = chart
     const { data = [] } = config
     const xAxis:any = {}
-    if (isShowAxis(chart)) {
-        xAxis.type = 'category'
-        xAxis.data = []
-        for (let i = 1; i < data.length; i++) {
-            xAxis.data.push(data[i][0])
-        }
+    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
+        xAxis.type = 'value'
         return {
             xAxis
         }
     }
     return {
     }
+}
+const getYAxis = (chart:ChartObject) => {
+    const { config } = chart
+    const { data = [] } = config
+    const yAxis:any = {}
+    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
+        yAxis.type = 'category'
+        yAxis.data = []
+        // yAxis.animationDuration = 4000
+        // yAxis.animationDurationUpdate = 4000
+        for (let i = 1; i < data.length; i++) {
+            yAxis.data.push(data[i][0])
+        }
+        return {
+            yAxis
+        }
+    }
+    return {}
+
 }
 
 const getSeries = (chart:ChartObject) => {
@@ -70,16 +85,13 @@ const getLegend = (chart:ChartObject) => {
     const { config } = chart
     const { data = [] } = config
     const legend:any = {
-        // orient: 'vertical',
         bottom: '10',
     }
 
-    if (isShowAxis(chart)) {
+    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
+        return {
 
-        const chartData = _.cloneDeep(data)
-        chartData[0].shift()
-        legend.data = chartData[0]
-
+        }
     }
 
     return {
@@ -87,24 +99,43 @@ const getLegend = (chart:ChartObject) => {
     }
 }
 
-const getYAxis = (chart:ChartObject) => {
-    const yAxis:any = {}
-    if (isShowAxis(chart)) {
-        yAxis.type = 'value'
-        return {
-            yAxis
+const getTitle = (chart:ChartObject) => {
+    const title = chart?.config?.title
+    return {
+        title: {
+            show: title.show,
+            text: title.value,
+            left: 10,
+            top: 10
         }
     }
-    return {}
-
 }
 
-export function createDynamicOption (data:ChartObject) {
+const getFrames = (chart:ChartObject, frameIndex:number) => {
+    const datas = _.cloneDeep(chart.config.data)
+    const headers = datas.shift()
+    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
+        const results = datas.reverse().filter((item:any, index:number) => {
+            return index <= frameIndex
+        })
+        results.unshift(headers)
+        return results
+    }
+
+    return datas
+}
+
+export function createDynamicOption (data:ChartObject, frameIndex:number) {
     const chart = _.cloneDeep(data)
+    const { config } = chart
+    config.data = getFrames(chart, frameIndex)
+
+    const { animation } = config
     const xAxis = getXAxis(chart)
     const yAxis = getYAxis(chart)
     const series = getSeries(chart)
     const legend = getLegend(chart)
+    const title = getTitle(chart)
 
     const option = {
         backgroundColor: '#fff',
@@ -112,17 +143,16 @@ export function createDynamicOption (data:ChartObject) {
         ...yAxis,
         ...series,
         ...legend,
-        title: {
-            text: chart.name,
-            left: '10',
-            top: '10',
-        },
+        ...title,
+        animationDuration: animation.moveTime * 1000,
+        // animationDurationUpdate: 6000,
+        animationEasing: 'linear',
+        animationEasingUpdate: 'linear',
         grid: {
         },
         tooltip: {
             trigger: 'item',
         },
     }
-    console.log('option: ', option)
     return option
 }

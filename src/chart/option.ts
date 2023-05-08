@@ -165,11 +165,6 @@ export function createOption (data:ChartObject) {
         ...series,
         ...legend,
         ...title,
-        // title: {
-        //     text: chart.name,
-        //     left: '10',
-        //     top: '10',
-        // },
         grid: {
         },
         tooltip: {

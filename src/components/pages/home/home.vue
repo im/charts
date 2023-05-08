@@ -141,6 +141,7 @@ const broadcast = () => {
 }
 
 onMounted( async () => {
+    document.querySelector('html')?.classList.remove('dark')
     await folderStore.update()
     await chartStore.update()
     loading.value = false

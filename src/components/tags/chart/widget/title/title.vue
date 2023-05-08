@@ -20,17 +20,15 @@ import Widget from '@/components/tags/chart/widget'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
 import { updateChartConfig } from '@/utils/chart'
+import { ChartTypeObject, chartType, ChartConfigTitleObject } from '@/typings/chart'
+
 const CHART = injectStrict(ChartKey)
 
-const data = ref({
-    value: '',
-    show: true
-})
+const data = ref({} as ChartConfigTitleObject)
 
 const init = () => {
     const { config } = CHART.value
-    data.value.show = config?.title?.show
-    data.value.value = config?.title?.value
+    data.value = { ...config?.title }
 }
 
 const change = () => {

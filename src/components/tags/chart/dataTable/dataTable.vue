@@ -58,11 +58,12 @@ const updateData = () => {
         const datas = sourceData.map((arr:any) => {
             return arr.filter((v:any) => v !== null)
         }).filter((v:any) => v.length)
+        console.log(JSON.stringify(datas))
         const isEqual = _.isEqual(datas, tableData.value)
         if (tableData.value && !isEqual && datas.length) {
-            const current:any = { ...CHART?.value }
+            const current:any = _.cloneDeep(CHART?.value)
             current.config.data = datas
-            emitter.emit('updateChart', _.cloneDeep(current))
+            emitter.emit('updateChart', current)
         }
     })
 }

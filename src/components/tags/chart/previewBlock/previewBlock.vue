@@ -19,7 +19,6 @@ import emitter from '@/utils/emitter'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
-import { ChartObject } from '@/typings/chart'
 import {
     TitleComponent,
     TooltipComponent,
@@ -32,6 +31,8 @@ import { ref, provide } from 'vue'
 import { createOption } from '@/chart/option'
 import { DYNAMIC_PREFIX } from '@/constants/prefix'
 import { createDynamicOption } from '@/chart/dynamicOption'
+// @ts-ignore
+import gifshot from 'gifshot'
 
 use([
     GridComponent,
@@ -49,29 +50,68 @@ const CHART = injectStrict(ChartKey)
 // https://github.com/ecomfe/vue-echarts
 // https://blog.csdn.net/qq_43953273/article/details/121085281
 
+emitter.on('chartRun', (frameIndex) => {
+    const setOption = chartRef.value?.setOption
+    setOption(createDynamicOption(CHART.value, frameIndex))
+
+})
+
+let loopTimer:any = null
+let imageList:any = []
+
 provide(THEME_KEY, 'light')
 
 const chartRef:any = ref(null)
 
+const isDynamic = computed(() => ~CHART.value.type.indexOf(DYNAMIC_PREFIX))
+
 const option:any = computed(() => {
-    if ( CHART?.value.id) {
-        return ~CHART.value.type.indexOf(DYNAMIC_PREFIX) ? createDynamicOption(CHART.value) : createOption(CHART.value)
+    if (CHART?.value.id) {
+        return isDynamic.value ? createDynamicOption(CHART.value, 0) : createOption(CHART.value)
     } else {
         return {}
     }
 })
 
-const download = (str:string) => {
+const download = (str:string, suffix = 'png') => {
     const a = document.createElement('a')
-    a.download = CHART?.value.name + '.png'
+    a.download = CHART?.value.name + '.' + suffix
     a.href = str
     document.body.appendChild(a)
     a.click()
     a.remove()
 }
 
+const downloadGif = () => {
+    imageList = []
+
+    loopTimer = setInterval(() => {
+        imageList.push( chartRef.value?.getDataURL('awImage'))
+    }, 300)
+}
+
+emitter.on('chartEnd', () => {
+    clearInterval(loopTimer)
+    gifshot.createGIF({
+        gifWidth: 1000,
+        gifHeight: 600,
+        interval: 0.3,
+        images: imageList,
+    }, (obj:any) => {
+        if (!obj.error) {
+            const image = obj.image
+            download(image, 'gif')
+        }
+    })
+})
+
 emitter.on('handleChart', (command) => {
-    download(chartRef.value?.getDataURL('awImage'))
+    if (isDynamic.value) {
+        emitter.emit('chartStart')
+        downloadGif()
+    } else {
+        download(chartRef.value?.getDataURL('awImage'))
+    }
 })
 
 </script>

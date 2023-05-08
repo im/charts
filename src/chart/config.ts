@@ -15,6 +15,7 @@ export function createConfig (chart: ChartTypeObject) {
             moveTime: 0.5,
             startDelayTime: 0,
             endDelayTime: 1,
+            loop: 0
         }
     }
 }

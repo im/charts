@@ -6,6 +6,7 @@ import 'element-plus/dist/index.css'
 import '@/style/normalize.css'
 import '@/style/app.styl'
 import App from './App.vue'
+import 'element-plus/theme-chalk/dark/css-vars.css'
 
 const app = createApp(App)
 

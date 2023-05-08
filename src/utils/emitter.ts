@@ -6,6 +6,10 @@ type Events = {
     createChart: string
     updateChart: string
     handleChart: string
+    chartRun: number
+    chartStart: any
+    chartEnd: any
+    chartClear: any
 }
 
 const emitter: Emitter<Events> = mitt<Events>()

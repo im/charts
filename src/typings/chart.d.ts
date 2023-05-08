@@ -14,6 +14,7 @@ export interface ChartConfigAnimationObject {
     moveTime: number
     startDelayTime: number
     endDelayTime: number
+    loop: number
 }
 
 export interface ChartConfigTitleObject {
@@ -26,7 +27,9 @@ export interface ChartConfigObject {
     data: array
 }
 
-export type ChartConfigKeys = typeof ChartConfigObject
+export type ChartConfigKeys = keyof ChartConfigObject
+
+export type ChartConfigAnimationKeys = keyof ChartConfigAnimationObject
 
 export type ChartConfigValues = ChartConfigTitleObject | ChartConfigAnimationObject
 

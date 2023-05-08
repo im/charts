@@ -58,6 +58,7 @@ const broadcast = () => {
 onMounted(async () => {
     await getChart()
     loading.value = false
+    document.querySelector('html')?.classList.add('dark')
 })
 
 </script>
