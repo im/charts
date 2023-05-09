@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import Widget from '@/components/tags/chart/widget'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
@@ -102,6 +102,10 @@ const init = () => {
     data.value = { ...config?.animation }
 }
 
+watch(() => play.value, () => {
+    emitter.emit('updateChartPlayState', play.value)
+})
+
 const start = () => {
     if (!frameIndex.value) {
         startDelayTimer = setTimeout(() => {
@@ -115,7 +119,7 @@ const start = () => {
 const run = () => {
     runTimer = setInterval(() => {
         frameIndex.value = frameIndex.value + 1
-        if (frameIndex.value > chartDataLen.value) {
+        if (frameIndex.value >= chartDataLen.value) {
             end()
         }
         emitter.emit('chartRun', frameIndex.value)
@@ -124,6 +128,7 @@ const run = () => {
 const stop = () => {
     clearTimeout(startDelayTimer)
     clearInterval(runTimer)
+    play.value = false
 }
 const end = () => {
     if (data.value.loop) {
@@ -153,6 +158,10 @@ const handlePlay = () => {
 emitter.on('chartStart', () => {
     clear()
     handlePlay()
+})
+
+emitter.on('chartStop', () => {
+    stop()
 })
 
 emitter.on('chartClear', () => {

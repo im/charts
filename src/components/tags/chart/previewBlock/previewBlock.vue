@@ -9,6 +9,10 @@
     <div class="preview-block">
         <div class="v-chart-box">
             <v-chart ref="chartRef" class="chart" autoresize :option="option" />
+            <div v-if="isDynamic" class="play-btn" @click="handlePlay">
+                <i v-if="play" class="iconfont icon-weibiaoti519"></i>
+                <i v-else class="iconfont icon-bofang "></i>
+            </div>
         </div>
     </div>
 </template>
@@ -64,6 +68,19 @@ let imageList:any = []
 provide(THEME_KEY, 'westeros')
 
 const chartRef:any = ref(null)
+const play = ref(false)
+
+const handlePlay = () => {
+    if (play.value) {
+        emitter.emit('chartStop')
+    } else {
+        emitter.emit('chartStart')
+    }
+}
+
+emitter.on('updateChartPlayState', state => {
+    play.value = state
+})
 
 const isDynamic = computed(() => ~CHART.value.type.indexOf(DYNAMIC_PREFIX))
 
@@ -75,22 +92,13 @@ const option:any = computed(() => {
     }
 })
 
-const download = (str:string, suffix = 'png') => {
-    const a = document.createElement('a')
-    a.download = CHART?.value.name + '.' + suffix
-    a.href = str
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-}
-
 const downloadGif = () => {
     imageList = []
 
     loopTimer = setInterval(() => {
         const src = chartRef.value?.getDataURL({
             type: 'png',
-            pixelRatio: 4,
+            pixelRatio: 3,
             backgroundColor: '#fff'
         })
         imageList.push(src)
@@ -101,7 +109,7 @@ emitter.on('chartEnd', () => {
     clearInterval(loopTimer)
     gifshot.createGIF({
         gifWidth: 1000,
-        gifHeight: 600,
+        gifHeight: 630,
         interval: 0.1,
         images: imageList,
     }, (obj:any) => {

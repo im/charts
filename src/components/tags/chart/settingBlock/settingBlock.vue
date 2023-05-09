@@ -36,11 +36,11 @@ type viewObj = {
 }
 
 const viewList: Array<viewObj> = [{
-    value: 'data',
-    label: '编辑数据'
-}, {
     value: 'setting',
     label: '编辑图表'
+}, {
+    value: 'data',
+    label: '编辑数据'
 }]
 
 const view = ref('setting')

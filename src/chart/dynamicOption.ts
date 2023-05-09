@@ -66,7 +66,6 @@ const getSeries = (chart:ChartObject) => {
             const obj:any = {
                 name,
                 type: 'bar',
-                // stack: 'Total',
                 barMaxWidth: 40,
                 data: []
             }
@@ -76,6 +75,29 @@ const getSeries = (chart:ChartObject) => {
             }
             series.push(obj)
         })
+    }
+
+    if (checkChartType(chart, 'DYNAMIC_RING')) {
+        const obj:any = {
+            name: chartData.shift()[0],
+            data: [],
+            radius: ['40%', '70%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 10,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            type: 'pie'
+        }
+        chartData.forEach((item:any) => {
+            const [name, value] = item
+            obj.data.push({
+                value,
+                name
+            })
+        })
+        series.push(obj)
     }
 
     return {
@@ -91,6 +113,13 @@ const getFrames = (chart:ChartObject, frameIndex:number) => {
             return index <= frameIndex
         })
         results.unshift(headers)
+        return results
+    }
+
+    if (checkChartType(chart, 'DYNAMIC_RING')) {
+        const results = headers.map((name:string, index:number) => {
+            return [name, datas[frameIndex][index]]
+        })
         return results
     }
 

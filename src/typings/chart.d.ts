@@ -2,6 +2,7 @@ import { DYNAMIC_PREFIX, LINE_PREFIX } from './prefix'
 
 export type ChartType = 'DYNAMIC_RANKING_BAR'
 | 'DYNAMIC_LINE_BAR_MIX'
+| 'DYNAMIC_RING'
 | 'LINE_BASICS'
 | 'BAR_BASICS'
 | 'PIE_BASICS'

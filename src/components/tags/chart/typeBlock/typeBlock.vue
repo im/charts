@@ -25,9 +25,15 @@
                     </div>
                 </div>
             <div v-show="!expand" class="chart-nav">
-                <div v-for="chart in chartTypeOptions" :key="chart.value" :class="{ active: chart.value === CHART.type }" @click="handleType(chart)">
-                    <i class="iconfont" :class="[chart.icon]"></i>
-                </div>
+                <el-tooltip
+                    v-for="chart in chartTypeOptions"
+                    :key="chart.value"
+                    :content="chart.label"
+                    placement="right">
+                    <div :class="{ active: chart.value === CHART.type }" @click="handleType(chart)">
+                        <i class="iconfont" :class="[chart.icon]"></i>
+                    </div>
+                </el-tooltip>
             </div>
         </div>
         <div class="bottom" @click="expand = !expand">
@@ -40,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted , defineProps, inject } from 'vue'
+import { computed, ref, onMounted , defineProps, inject, reactive } from 'vue'
 import { getChartTypes, chartTypeOptions } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
 import emitter from '@/utils/emitter'
@@ -72,6 +78,7 @@ const handleType = (data: any) => {
         }
     )
         .then(() => {
+            emitter.emit('chartClear')
             const current:any = _.cloneDeep(CHART?.value)
             const datas = DATAS[data.value as ChartType]
             current.config.data = datas

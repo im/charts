@@ -13,10 +13,10 @@ export const CHART_TYPE_MAP = {
         label: '动态排名变化图',
         icon: 'icon-paiming'
     },
-    // [`${DYNAMIC_PREFIX}LINE_BAR_MIX`]: {
-    //     label: '动态折线条形混合图',
-    //     icon: 'icon-gengduo'
-    // },
+    [`${DYNAMIC_PREFIX}RING`]: {
+        label: '动态环形图',
+        icon: 'icon-huanxingtu1'
+    },
     [`${LINE_PREFIX}BASICS`]: {
         label: '基础折线图',
         icon: 'icon-zhexiantu'

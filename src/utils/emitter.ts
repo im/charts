@@ -10,8 +10,10 @@ type Events = {
     chartStart: any
     chartEnd: any
     chartClear: any
+    chartStop: any
     startDownload: string
     endDownload: object
+    updateChartPlayState: boolean
 }
 
 const emitter: Emitter<Events> = mitt<Events>()
