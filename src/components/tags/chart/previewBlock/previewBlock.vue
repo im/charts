@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, computed, inject } from 'vue'
+import { onMounted, computed, inject, nextTick } from 'vue'
+import westeros from '@/theme/westeros'
 import emitter from '@/utils/emitter'
-import { use } from 'echarts/core'
+import { use, registerTheme } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
 import {
@@ -25,7 +26,6 @@ import {
     LegendComponent,
     GridComponent
 } from 'echarts/components'
-
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 import { createOption } from '@/chart/option'
@@ -44,6 +44,7 @@ use([
     TooltipComponent,
     LegendComponent
 ])
+registerTheme('westeros', westeros)
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
 const CHART = injectStrict(ChartKey)
@@ -59,7 +60,7 @@ emitter.on('chartRun', (frameIndex) => {
 let loopTimer:any = null
 let imageList:any = []
 
-provide(THEME_KEY, 'light')
+provide(THEME_KEY, 'westeros')
 
 const chartRef:any = ref(null)
 
@@ -86,8 +87,13 @@ const downloadGif = () => {
     imageList = []
 
     loopTimer = setInterval(() => {
-        imageList.push( chartRef.value?.getDataURL('awImage'))
-    }, 300)
+        const src = chartRef.value?.getDataURL({
+            type: 'png',
+            pixelRatio: 1,
+            backgroundColor: '#fff'
+        })
+        imageList.push(src)
+    }, 100)
 }
 
 emitter.on('chartEnd', () => {
@@ -95,22 +101,40 @@ emitter.on('chartEnd', () => {
     gifshot.createGIF({
         gifWidth: 1000,
         gifHeight: 600,
-        interval: 0.3,
+        interval: 0.2,
         images: imageList,
     }, (obj:any) => {
         if (!obj.error) {
             const image = obj.image
-            download(image, 'gif')
+            emitter.emit('endDownload', {
+                image: image,
+                suffix: 'gif'
+            })
         }
     })
 })
 
 emitter.on('handleChart', (command) => {
     if (isDynamic.value) {
+        emitter.emit('startDownload', '')
         emitter.emit('chartStart')
         downloadGif()
     } else {
-        download(chartRef.value?.getDataURL('awImage'))
+        emitter.emit('startDownload', '')
+
+        nextTick(() => {
+            const src = chartRef.value?.getDataURL({
+                type: 'png',
+                pixelRatio: 10,
+                backgroundColor: '#fff'
+            })
+
+            emitter.emit('endDownload', {
+                image: src,
+                suffix: 'png'
+            })
+        })
+
     }
 })
 

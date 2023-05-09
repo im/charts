@@ -13,6 +13,7 @@
             <PreviewBlock></PreviewBlock>
             <SettingBlock></SettingBlock>
         </div>
+        <DownloadLoading></DownloadLoading>
     </div>
 </template>
 
@@ -23,6 +24,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { ChartObject } from '@/typings/chart'
 import Topbar from '@/components/tags/chart/topbar'
 import TypeBlock from '@/components/tags/chart/typeBlock'
+import DownloadLoading from '@/components/tags/downloadLoading'
 import PreviewBlock from '@/components/tags/chart/previewBlock'
 import SettingBlock from '@/components/tags/chart/settingBlock'
 import emitter from '@/utils/emitter'

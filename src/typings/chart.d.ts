@@ -1,6 +1,6 @@
 import { DYNAMIC_PREFIX, LINE_PREFIX } from './prefix'
 
-export type chartType = 'DYNAMIC_RANKING_BAR'
+export type ChartType = 'DYNAMIC_RANKING_BAR'
 | 'DYNAMIC_LINE_BAR_MIX'
 | 'LINE_BASICS'
 | 'BAR_BASICS'
@@ -22,6 +22,8 @@ export interface ChartConfigTitleObject {
     value: string
 }
 export interface ChartConfigObject {
+    theme: string
+    legend: boolean
     title: ChartConfigTitleObject
     animation: ChartConfigAnimationObject
     data: array
@@ -31,18 +33,18 @@ export type ChartConfigKeys = keyof ChartConfigObject
 
 export type ChartConfigAnimationKeys = keyof ChartConfigAnimationObject
 
-export type ChartConfigValues = ChartConfigTitleObject | ChartConfigAnimationObject
+export type ChartConfigValues = ChartConfigTitleObject | ChartConfigAnimationObject | string | boolean
 
 export interface ChartObject {
     id: number | string
     name: string
     createdTime: date
     updatedTime: date
-    type: chartType
+    type: ChartType
     config: ChartConfigObject
 }
 
 export interface ChartTypeObject {
     label: string
-    value: chartType
+    value: ChartType
 }

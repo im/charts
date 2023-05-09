@@ -2,17 +2,12 @@ import { ChartObject, vChartType } from '@/typings/chart'
 // @ts-ignore
 import _ from 'loadsh'
 import OPTIONS from './options'
+import { getColor, getTitle, checkChartType, getLegend } from './utils'
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
     const chartType = OPTIONS[type]?.type
     return !!['bar', 'line'].includes(chartType)
-}
-
-const checkChartType = (chart:ChartObject, chartType: vChartType) => {
-    const { type } = chart
-    const optionType = OPTIONS[type].type
-    return optionType === chartType
 }
 
 const getXAxis = (chart:ChartObject) => {
@@ -51,7 +46,13 @@ const getSeries = (chart:ChartObject) => {
                 name,
                 type: chartType,
                 // stack: 'Total',
-                data: []
+                data: [],
+                markPoint: {
+                    data: [
+                        { type: 'max', name: 'Max' },
+                        { type: 'min', name: 'Min' }
+                    ]
+                }
             }
             for (let i = 1; i < chartData.length; i++) {
                 const item:any = chartData[i]
@@ -59,19 +60,20 @@ const getSeries = (chart:ChartObject) => {
             }
             series.push(obj)
         })
+        console.log('series: ', series)
     }
 
     if (checkChartType(chart, 'pie')) {
         const obj:any = {
-            name: chartData[0].shift(),
+            name: chartData.shift()[0],
             radius: '50%',
             data: [],
             type: chartType
         }
-        const names = chartData[0]
-        names.forEach((name: string, index: number) => {
+        chartData.forEach((item:any) => {
+            const [name, value] = item
             obj.data.push({
-                value: chartData[1][index + 1],
+                value,
                 name
             })
         })
@@ -80,7 +82,7 @@ const getSeries = (chart:ChartObject) => {
 
     if (checkChartType(chart, 'ring')) {
         const obj:any = {
-            name: chartData[0].shift(),
+            name: chartData.shift()[0],
             data: [],
             radius: ['40%', '70%'],
             avoidLabelOverlap: false,
@@ -91,10 +93,10 @@ const getSeries = (chart:ChartObject) => {
             },
             type: 'pie'
         }
-        const names = chartData[0]
-        names.forEach((name: string, index: number) => {
+        chartData.forEach((item:any) => {
+            const [name, value] = item
             obj.data.push({
-                value: chartData[1][index + 1],
+                value,
                 name
             })
         })
@@ -103,27 +105,6 @@ const getSeries = (chart:ChartObject) => {
 
     return {
         series
-    }
-}
-
-const getLegend = (chart:ChartObject) => {
-    const { config } = chart
-    const { data = [] } = config
-    const legend:any = {
-        // orient: 'vertical',
-        bottom: '10',
-    }
-
-    if (isShowAxis(chart)) {
-
-        const chartData = _.cloneDeep(data)
-        chartData[0].shift()
-        legend.data = chartData[0]
-
-    }
-
-    return {
-        legend
     }
 }
 
@@ -138,17 +119,6 @@ const getYAxis = (chart:ChartObject) => {
     return {}
 
 }
-const getTitle = (chart:ChartObject) => {
-    const title = chart?.config?.title
-    return {
-        title: {
-            show: title.show,
-            text: title.value,
-            left: 10,
-            top: 10
-        }
-    }
-}
 
 export function createOption (data:ChartObject) {
     const chart = _.cloneDeep(data)
@@ -157,19 +127,22 @@ export function createOption (data:ChartObject) {
     const series = getSeries(chart)
     const legend = getLegend(chart)
     const title = getTitle(chart)
+    const color = getColor(chart)
 
     const option = {
-        backgroundColor: '#fff',
+        ...color,
         ...xAxis,
         ...yAxis,
         ...series,
         ...legend,
         ...title,
+        backgroundColor: '#fff',
         grid: {
         },
         tooltip: {
             trigger: 'item',
         },
     }
+    console.log('option: ', option)
     return option
 }

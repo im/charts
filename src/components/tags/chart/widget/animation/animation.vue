@@ -61,10 +61,10 @@ const list: Array<Item> = [
         label: '结束时间（秒）',
         value: 'endDelayTime'
     },
-    {
-        label: '循环播放',
-        value: 'loop'
-    }
+    // {
+    //     label: '循环播放',
+    //     value: 'loop'
+    // }
 ]
 
 const stepMap = {

@@ -1,7 +1,8 @@
-import { ChartObject, chartType } from '@/typings/chart'
+import { ChartObject, ChartType } from '@/typings/chart'
 // @ts-ignore
 import _ from 'loadsh'
 import OPTIONS from './options'
+import { getColor, getTitle, checkChartType, getLegend } from './utils'
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
@@ -9,16 +10,14 @@ const isShowAxis = (chart:ChartObject) => {
     return !!['DYNAMIC_RANKING_BAR'].includes(chartType)
 }
 
-const checkChartType = (chart:ChartObject, chartType: chartType) => {
-    const { type } = chart
-    const optionType = OPTIONS[type].type
-    return optionType === chartType
-}
-
 const getXAxis = (chart:ChartObject) => {
     const { config } = chart
     const { data = [] } = config
-    const xAxis:any = {}
+    const xAxis:any = {
+        axisTick: {
+            show: false
+        }
+    }
     if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
         xAxis.type = 'value'
         return {
@@ -31,12 +30,14 @@ const getXAxis = (chart:ChartObject) => {
 const getYAxis = (chart:ChartObject) => {
     const { config } = chart
     const { data = [] } = config
-    const yAxis:any = {}
+    const yAxis:any = {
+        axisTick: {
+            show: false
+        }
+    }
     if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
         yAxis.type = 'category'
         yAxis.data = []
-        // yAxis.animationDuration = 4000
-        // yAxis.animationDurationUpdate = 4000
         for (let i = 1; i < data.length; i++) {
             yAxis.data.push(data[i][0])
         }
@@ -66,6 +67,7 @@ const getSeries = (chart:ChartObject) => {
                 name,
                 type: 'bar',
                 // stack: 'Total',
+                barMaxWidth: 40,
                 data: []
             }
             for (let i = 1; i < chartData.length; i++) {
@@ -78,36 +80,6 @@ const getSeries = (chart:ChartObject) => {
 
     return {
         series
-    }
-}
-
-const getLegend = (chart:ChartObject) => {
-    const { config } = chart
-    const { data = [] } = config
-    const legend:any = {
-        bottom: '10',
-    }
-
-    if (checkChartType(chart, 'DYNAMIC_RANKING_BAR')) {
-        return {
-
-        }
-    }
-
-    return {
-        legend
-    }
-}
-
-const getTitle = (chart:ChartObject) => {
-    const title = chart?.config?.title
-    return {
-        title: {
-            show: title.show,
-            text: title.value,
-            left: 10,
-            top: 10
-        }
     }
 }
 
@@ -136,14 +108,16 @@ export function createDynamicOption (data:ChartObject, frameIndex:number) {
     const series = getSeries(chart)
     const legend = getLegend(chart)
     const title = getTitle(chart)
+    const color = getColor(chart)
 
     const option = {
-        backgroundColor: '#fff',
+        ...color,
         ...xAxis,
         ...yAxis,
         ...series,
         ...legend,
         ...title,
+        backgroundColor: '#fff',
         animationDuration: animation.moveTime * 1000,
         // animationDurationUpdate: 6000,
         animationEasing: 'linear',

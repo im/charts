@@ -6,6 +6,8 @@ export function createConfig (chart: ChartTypeObject) {
     const data = DATAS[type]
     return {
         data,
+        theme: 'westeros',
+        legend: true,
         title: {
             show: true,
             value: chart.label

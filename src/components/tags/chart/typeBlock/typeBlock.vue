@@ -41,14 +41,17 @@
 
 <script lang="ts" setup>
 import { computed, ref, onMounted , defineProps, inject } from 'vue'
-import { getChartTypes, chartTypeOptions, } from '@/constants/chartType'
+import { getChartTypes, chartTypeOptions } from '@/constants/chartType'
 import PreviewImage from '@/components/tags/previewImage'
 import emitter from '@/utils/emitter'
+import { ElMessageBox, ElMessage } from 'element-plus'
 // @ts-ignore
 import _ from 'loadsh'
 
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
+import DATAS from '@/chart/datas'
+import { ChartTypeObject, ChartType } from '@/typings/chart'
 const CHART = injectStrict(ChartKey)
 
 const chartTypes = ref(getChartTypes().map(v => { return { ...v, open: true } } ))
@@ -59,9 +62,22 @@ const open = (chartType:any) => {
 const expand = ref(false)
 
 const handleType = (data: any) => {
-    const current:any = _.cloneDeep(CHART?.value)
-    current.type = data.value
-    emitter.emit('updateChart', current)
+    ElMessageBox.confirm(
+        '切换图表类型将会替换原图表的数据，你确定要切换吗？',
+        '提示',
+        {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            const current:any = _.cloneDeep(CHART?.value)
+            const datas = DATAS[data.value as ChartType]
+            current.config.data = datas
+            current.type = data.value
+            emitter.emit('updateChart', current)
+        })
 }
 </script>
 

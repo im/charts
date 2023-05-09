@@ -10,7 +10,7 @@
         <div class="content" @click="handleChart">
             <PreviewImage :chart="chart" />
             <el-dropdown :teleported="false" @command="handleCommand">
-                <div class="operation">
+                <div class="operation" @click.stop>
                     <i class="iconfont icon-gengduo"></i>
                 </div>
                 <template #dropdown>

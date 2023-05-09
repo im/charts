@@ -20,7 +20,7 @@
             <!-- <el-button v-if="!isFolder" size="large" @click="createFolder">
                 <i class="iconfont icon-jia"></i>新建文件夹
             </el-button> -->
-            <el-input
+            <!-- <el-input
                 v-model="keyword"
                 size="large"
                 class="search"
@@ -28,7 +28,7 @@
                 <template #prefix>
                     <i class="iconfont icon-search-2-copy"></i>
                 </template>
-            </el-input>
+            </el-input> -->
         </div>
 </div>
 </template>

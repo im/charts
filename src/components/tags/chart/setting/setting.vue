@@ -7,15 +7,27 @@
 
 <template>
     <div class="setting">
-        <Animation :open="true" />
-        <Title />
+        <Animation v-if="isDynamic" :open="true" />
+        <Title :open="true" />
+        <Theme :open="true" />
+        <Legend :open="true" />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, defineProps, ref, } from 'vue'
-import Title from '@/components/tags/chart/widget/title'
 import Animation from '@/components/tags/chart/widget/animation'
+import Title from '@/components/tags/chart/widget/title'
+import Theme from '@/components/tags/chart/widget/theme'
+import Legend from '@/components/tags/chart/widget/legend'
+
+import { DYNAMIC_PREFIX } from '@/constants/prefix'
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
+const CHART = injectStrict(ChartKey)
+
+const isDynamic = computed(() => ~CHART.value.type.indexOf(DYNAMIC_PREFIX))
+
 </script>
 
 <style src="./setting.styl" lang="stylus" scoped></style>
