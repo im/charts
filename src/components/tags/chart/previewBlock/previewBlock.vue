@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, computed, inject, nextTick } from 'vue'
+import { onMounted, computed, inject, nextTick, onUnmounted } from 'vue'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
 import westeros from '@/theme/westeros'
@@ -57,6 +57,7 @@ const CHART = injectStrict(ChartKey)
 // https://blog.csdn.net/qq_43953273/article/details/121085281
 
 emitter.on('chartRun', (frameIndex) => {
+    console.log('frameIndex: ', frameIndex)
     nextTick(() => {
         const setOption = chartRef.value?.setOption
         setOption(createDynamicOption(CHART.value, frameIndex))
@@ -65,6 +66,7 @@ emitter.on('chartRun', (frameIndex) => {
 
 let loopTimer:any = null
 let imageList:any = []
+// 防止不是下载也会触发结束事件
 const isStartDownload = ref(false)
 
 provide(THEME_KEY, 'westeros')
@@ -150,6 +152,11 @@ emitter.on('handleChart', (command) => {
         })
 
     }
+})
+
+onUnmounted(() => {
+    clearInterval(loopTimer)
+    isStartDownload.value = false
 })
 
 </script>

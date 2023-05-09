@@ -7,7 +7,7 @@
 
 <template>
     <div class="setting">
-        <Animation v-if="isDynamic" :open="true" />
+        <Animation v-if="isDynamic" v-show="false" :open="true" />
         <Title :open="true" />
         <Theme :open="true" />
         <Legend :open="true" />

@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted, watch, onDeactivated, onUnmounted } from 'vue'
 import Widget from '@/components/tags/chart/widget'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
@@ -175,6 +175,10 @@ const change = () => {
 
 onMounted(() => {
     init()
+})
+
+onUnmounted(() => {
+    clear()
 })
 
 </script>
