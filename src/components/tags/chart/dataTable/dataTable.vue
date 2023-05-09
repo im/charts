@@ -36,6 +36,8 @@ import * as XLSX from 'xlsx/xlsx.mjs'
 // @ts-ignore
 import _ from 'loadsh'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
 
 registerAllModules()
 
@@ -44,8 +46,6 @@ registerAllModules()
 const hotTableComponent:any = ref(null)
 const tableData = computed(() => CHART?.value.config?.data || null)
 
-import { ChartKey } from '@/utils/symbols'
-import injectStrict from '@/utils/injectStrict'
 const CHART = injectStrict(ChartKey)
 
 watch(() => tableData.value, () => {

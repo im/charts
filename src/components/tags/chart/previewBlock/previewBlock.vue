@@ -15,6 +15,8 @@
 
 <script lang="ts" setup>
 import { onMounted, computed, inject, nextTick } from 'vue'
+import { ChartKey } from '@/utils/symbols'
+import injectStrict from '@/utils/injectStrict'
 import westeros from '@/theme/westeros'
 import emitter from '@/utils/emitter'
 import { use, registerTheme } from 'echarts/core'
@@ -45,8 +47,7 @@ use([
     LegendComponent
 ])
 registerTheme('westeros', westeros)
-import { ChartKey } from '@/utils/symbols'
-import injectStrict from '@/utils/injectStrict'
+
 const CHART = injectStrict(ChartKey)
 // https://github.com/ecomfe/vue-echarts
 // https://blog.csdn.net/qq_43953273/article/details/121085281
@@ -89,7 +90,7 @@ const downloadGif = () => {
     loopTimer = setInterval(() => {
         const src = chartRef.value?.getDataURL({
             type: 'png',
-            pixelRatio: 1,
+            pixelRatio: 4,
             backgroundColor: '#fff'
         })
         imageList.push(src)
@@ -101,7 +102,7 @@ emitter.on('chartEnd', () => {
     gifshot.createGIF({
         gifWidth: 1000,
         gifHeight: 600,
-        interval: 0.2,
+        interval: 0.1,
         images: imageList,
     }, (obj:any) => {
         if (!obj.error) {

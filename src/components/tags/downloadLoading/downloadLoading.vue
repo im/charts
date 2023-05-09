@@ -33,11 +33,9 @@ const download = (str:string, suffix = 'png') => {
 
 emitter.on('startDownload', () => {
     isShow.value = true
-    console.log('isShow.value: ', isShow.value)
 })
 
 emitter.on('endDownload', (data:any) => {
-    console.log('data: ', data)
     download(data.image, data.suffix)
     isShow.value = false
 })

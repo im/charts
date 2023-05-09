@@ -20,7 +20,7 @@ import Widget from '@/components/tags/chart/widget'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
 import { updateChartConfig } from '@/utils/chart'
-import { ChartTypeObject, chartType, ChartConfigTitleObject } from '@/typings/chart'
+import { ChartConfigTitleObject } from '@/typings/chart'
 
 const CHART = injectStrict(ChartKey)
 
