@@ -156,7 +156,7 @@ const handlePlay = () => {
 }
 
 emitter.on('chartStart', () => {
-    clear()
+    // clear()
     handlePlay()
 })
 

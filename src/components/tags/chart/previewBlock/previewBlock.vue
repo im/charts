@@ -57,10 +57,9 @@ const CHART = injectStrict(ChartKey)
 // https://blog.csdn.net/qq_43953273/article/details/121085281
 
 emitter.on('chartRun', (frameIndex) => {
-    console.log('frameIndex: ', frameIndex)
     nextTick(() => {
         const setOption = chartRef.value?.setOption
-        setOption(createDynamicOption(CHART.value, frameIndex))
+        setOption && setOption(createDynamicOption(CHART.value, frameIndex))
     })
 })
 
