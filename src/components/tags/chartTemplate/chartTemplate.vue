@@ -12,10 +12,11 @@
     title="图表模版"
     :before-close="handleClose">
         <div class="container">
-            <div v-for="chartType in chartTypes" :key="chartType.value">
-                <el-divider content-position="left">{{ chartType.label }}</el-divider>
+            <div v-for="chartType in chartTypes" :key="chartType.value" class="chart-list">
+                <!-- <el-divider content-position="left">{{ chartType.label }}</el-divider> -->
                 <div class="chart-wrapper">
                     <div v-for="chart in chartType.children" :key="chart.value" class="chart-block" @click="handleChart(chart)">
+                        <div class="tag">{{ chartType.label }}</div>
                         <div class="preview">
                             <PreviewImage :chart="chart" />
                         </div>
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineEmits, onMounted, ref } from 'vue'
+import { computed, defineEmits, onMounted, ref, nextTick } from 'vue'
 import PreviewImage from '@/components/tags/previewImage'
 import { getChartTypes } from '@/constants/chartType'
 import { useChartStore } from '@/stores/chart'
@@ -70,7 +71,9 @@ const handleChart = async (chart:ChartTypeObject) => {
     // const { origin, pathname } = window.location
     // const url = origin + pathname + href
     // window.open(url, '_blank')
-    handleClose()
+    nextTick(() => {
+        handleClose()
+    })
 }
 
 </script>
