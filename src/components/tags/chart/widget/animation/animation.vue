@@ -151,8 +151,8 @@ const handlePlay = () => {
         stop()
     } else {
         start()
+        play.value = !play.value
     }
-    play.value = !play.value
 }
 
 emitter.on('chartStart', () => {

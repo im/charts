@@ -14,7 +14,7 @@
             <DataTable></DataTable>
        </div>
 
-       <div v-if="view === 'setting'" class="chart-setting">
+       <div v-show="view === 'setting'" class="chart-setting">
             <Setting></Setting>
        </div>
     </div>

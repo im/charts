@@ -65,6 +65,7 @@ emitter.on('chartRun', (frameIndex) => {
 
 let loopTimer:any = null
 let imageList:any = []
+const isStartDownload = ref(false)
 
 provide(THEME_KEY, 'westeros')
 
@@ -107,7 +108,7 @@ const downloadGif = () => {
 
 emitter.on('chartEnd', () => {
     clearInterval(loopTimer)
-    if (!imageList.length) return
+    if (!imageList.length || !isStartDownload.value) return
     gifshot.createGIF({
         gifWidth: 1000,
         gifHeight: 630,
@@ -123,10 +124,12 @@ emitter.on('chartEnd', () => {
             imageList = []
         }
     })
+    isStartDownload.value = false
 })
 
 emitter.on('handleChart', (command) => {
     if (isDynamic.value) {
+        isStartDownload.value = true
         emitter.emit('startDownload', '')
         emitter.emit('chartStart')
         downloadGif()
