@@ -5,7 +5,6 @@ specifiers:
   '@handsontable/vue3': ^12.3.3
   '@tangxiaomi/eslint-config': ^0.0.3
   '@types/node': ^18.15.12
-  '@types/uuid': ^9.0.1
   '@vitejs/plugin-vue': ^4.1.0
   '@vueuse/core': ^10.1.2
   colors: ^1.4.0
@@ -36,7 +35,6 @@ specifiers:
 dependencies:
   '@element-plus/icons-vue': 2.1.0_vue@3.2.47
   '@handsontable/vue3': 12.3.3_36wa4xgeccuzcdxlczhkitb4pi
-  '@types/uuid': 9.0.1
   '@vueuse/core': 10.1.2_vue@3.2.47
   echarts: 5.4.2
   element-plus: 2.3.3_vue@3.2.47
@@ -463,10 +461,6 @@ packages:
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
     dev: true
-
-  /@types/uuid/9.0.1:
-    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
-    dev: false
 
   /@types/web-bluetooth/0.0.16:
     resolution: {integrity: sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ==}
