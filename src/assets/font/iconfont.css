@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4029337 */
-  src: url('@/assets/font/iconfont.woff2?t=1683627188817') format('woff2'),
-       url('@/assets/font/iconfont.woff?t=1683627188817') format('woff'),
-       url('@/assets/font/iconfont.ttf?t=1683627188817') format('truetype');
+  src: url('iconfont.woff2?t=1683627188817') format('woff2'),
+       url('iconfont.woff?t=1683627188817') format('woff'),
+       url('iconfont.ttf?t=1683627188817') format('truetype');
 }
 
 .iconfont {
@@ -96,3 +96,4 @@
 .icon-jia:before {
   content: "\e600";
 }
+
