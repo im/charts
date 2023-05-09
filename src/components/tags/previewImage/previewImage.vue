@@ -6,7 +6,7 @@
 -->
 
 <template>
-    <el-image :src="url" fit="cover" />
+    <el-image :src="url" fit="cover" :lazy="true" />
 </template>
 
 <script lang="ts" setup>

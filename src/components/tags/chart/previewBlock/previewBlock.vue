@@ -95,7 +95,6 @@ const option:any = computed(() => {
 
 const downloadGif = () => {
     imageList = []
-
     loopTimer = setInterval(() => {
         const src = chartRef.value?.getDataURL({
             type: 'png',
@@ -108,6 +107,7 @@ const downloadGif = () => {
 
 emitter.on('chartEnd', () => {
     clearInterval(loopTimer)
+    if (!imageList.length) return
     gifshot.createGIF({
         gifWidth: 1000,
         gifHeight: 630,
@@ -120,6 +120,7 @@ emitter.on('chartEnd', () => {
                 image: image,
                 suffix: 'gif'
             })
+            imageList = []
         }
     })
 })
