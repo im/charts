@@ -8,6 +8,16 @@ import '@/style/app.styl'
 import App from './App.vue'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 
+if (!Array.prototype.at) {
+    Array.prototype.at = function (index) {
+        if (index >= 0) {
+            return this[index]
+        } else {
+            return this[this.length + index]
+        }
+    }
+}
+
 const app = createApp(App)
 
 const pinia = createPinia()
