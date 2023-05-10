@@ -96,7 +96,7 @@ const downloadGif = () => {
         const src = chartRef.value?.getDataURL({
             type: 'png',
             pixelRatio: 3,
-            backgroundColor: '#fff'
+            backgroundColor: CHART.value.config.backgroundColor
         })
         imageList.push(src)
     }, 100)
@@ -135,7 +135,7 @@ emitter.on('handleChart', (command) => {
             const src = chartRef.value?.getDataURL({
                 type: 'png',
                 pixelRatio: 10,
-                backgroundColor: '#fff'
+                backgroundColor: CHART.value.config.backgroundColor
             })
             download(CHART.value, src, 'png')
 

@@ -11,6 +11,11 @@
             <div v-for="theme in themeColorList" :key="theme.value" class="theme" :class="{ active: theme.value === data.theme }" @click="change(theme.value)">
                 <div v-for="color in getColors(theme.color)" :key="color" :style="{ background: color }" class="color"></div>
             </div>
+
+            <div class="background-color">
+                画布颜色
+                <el-color-picker v-model="data.backgroundColor" show-alpha :predefine="predefineColors" @change="changeColor" />
+            </div>
         </div>
     </Widget>
 </template>
@@ -26,13 +31,34 @@ import { ChartTypeObject, ChartType, ChartConfigTitleObject } from '@/typings/ch
 
 const CHART = injectStrict(ChartKey)
 
+const predefineColors = ref([
+    '#ffffff',
+    '#000000',
+    '#ff4500',
+    '#ff8c00',
+    '#ffd700',
+    '#90ee90',
+    '#00ced1',
+    '#1e90ff',
+    '#c71585',
+    'rgba(255, 69, 0, 0.68)',
+    'rgb(255, 120, 0)',
+    // 'hsv(51, 100, 98)',
+    // 'hsva(120, 40, 94, 0.5)',
+    // 'hsl(181, 100%, 37%)',
+    // 'hsla(209, 100%, 56%, 0.73)',
+    '#c7158577',
+])
+
 const data = ref({
-    theme: ''
+    theme: '',
+    backgroundColor: '#ffffff'
 })
 
 const init = () => {
     const { config } = CHART.value
     data.value.theme = config?.theme || 'westeros'
+    data.value.backgroundColor = config?.backgroundColor || '#ffffff'
 }
 
 const getColors = (colors: any) => {
@@ -42,6 +68,10 @@ const getColors = (colors: any) => {
 const change = (value:string) => {
     data.value.theme = value
     updateChartConfig(CHART.value, 'theme', data.value.theme)
+}
+
+const changeColor = () => {
+    updateChartConfig(CHART.value, 'backgroundColor', data.value.backgroundColor)
 }
 
 onMounted(() => {

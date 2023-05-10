@@ -10,6 +10,7 @@
         <div class="wrapper">
             <el-checkbox v-model="data.show" label="" size="small" @change="change" />
             <el-input v-model="data.value" size="small" @input="change" />
+            <el-color-picker v-model="data.color" size="small" :predefine="predefineColors" @change="change" />
         </div>
     </Widget>
 </template>
@@ -25,6 +26,18 @@ import { ChartConfigTitleObject } from '@/typings/chart'
 const CHART = injectStrict(ChartKey)
 
 const data = ref({} as ChartConfigTitleObject)
+
+const predefineColors = ref([
+    '#ffffff',
+    '#000000',
+    '#ff4500',
+    '#ff8c00',
+    '#ffd700',
+    '#90ee90',
+    '#00ced1',
+    '#1e90ff',
+    '#c71585',
+])
 
 const init = () => {
     const { config } = CHART.value

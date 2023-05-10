@@ -21,9 +21,11 @@ export interface ChartConfigAnimationObject {
 export interface ChartConfigTitleObject {
     show: boolean
     value: string
+    color: string
 }
 export interface ChartConfigObject {
     theme: string
+    backgroundColor: string
     legend: boolean
     title: ChartConfigTitleObject
     animation: ChartConfigAnimationObject

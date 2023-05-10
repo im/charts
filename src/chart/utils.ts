@@ -9,7 +9,10 @@ export const getTitle = (chart:ChartObject) => {
             show: title.show,
             text: title.value,
             left: 10,
-            top: 10
+            top: 10,
+            textStyle: {
+                color: title.color
+            }
         }
     }
 }
@@ -18,6 +21,13 @@ export const getColor = (chart:ChartObject) => {
     const color = chart?.config?.theme || 'westeros'
     return {
         color: themeColorMap[color]
+    }
+}
+
+export const getBackgroundColor = (chart:ChartObject) => {
+    const color = chart?.config?.backgroundColor || '#ffffff'
+    return {
+        backgroundColor: color
     }
 }
 

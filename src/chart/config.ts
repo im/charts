@@ -8,9 +8,11 @@ export function createConfig (chart: ChartTypeObject) {
         data,
         theme: 'westeros',
         legend: true,
+        backgroundColor: '#ffffff',
         title: {
             show: true,
-            value: chart.label
+            value: chart.label,
+            color: '#333333'
         },
         animation: {
             intervalTime: 1,
