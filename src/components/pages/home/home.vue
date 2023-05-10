@@ -33,6 +33,8 @@ import { useFolderStore } from '@/stores/folder'
 import { useChartStore } from '@/stores/chart'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
+// @ts-ignore
+import _ from 'loadsh'
 
 const route = useRoute()
 const router = useRouter()
@@ -75,8 +77,7 @@ const changeFolder = (folder: FolderObject) => {
 }
 
 const changeChart = (chart: ChartObject) => {
-    const current: any = folders.value.find(v => v.id === chart.id)
-    current.name = chart.name
+    const current: any = _.cloneDeep(chart)
     current.updatedTime = new Date().getTime()
     chartStore.set(current)
 }

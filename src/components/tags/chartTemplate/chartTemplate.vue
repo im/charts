@@ -56,12 +56,12 @@ const handleChart = async (chart:ChartTypeObject) => {
         config: createConfig(chart)
     }
     const id = await chartStore.set(chartData)
-    router.push({
-        name: 'chart',
-        params: {
-            id
-        }
-    })
+    // router.push({
+    //     name: 'chart',
+    //     params: {
+    //         id
+    //     }
+    // })
     // const { href } = router.resolve({
     //     name: 'chart',
     //     params: {

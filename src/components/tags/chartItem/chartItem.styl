@@ -21,8 +21,11 @@
         height 108px
         .operation
             opacity 0
+            z-index 2
         &:hover
             border-radius: 4px;
+            .edit-box
+                opacity 1
             .operation
                 opacity 1
     .name
@@ -75,3 +78,23 @@
     .icon-gengduo
         font-size: 22px!important
 
+.edit-box
+    width 100%
+    height: 100%
+    background: rgba(0,0,0,0.3)
+    position absolute
+    left: 0
+    top: 0
+    opacity 0
+    transition: 0.4s
+    display flex
+    align-items: center
+    justify-content: center
+    z-index 1
+    span
+        display block
+        background: rgba(0,0,0,0.6)
+        font-size: 12px
+        padding 4px 3px
+        border-radius: 4px
+        color #fff

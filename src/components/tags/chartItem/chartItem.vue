@@ -26,6 +26,9 @@
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
+            <div class="edit-box">
+                <span>编辑</span>
+            </div>
         </div>
         <div class="name">
             <el-input v-if="isEdit" ref="inputRef" v-model.trim="name" v-click-outside="onClickOutside" @keydown.enter="enter"></el-input>
