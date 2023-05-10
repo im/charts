@@ -19,7 +19,9 @@
         </div>
         <div class="center">
             <div class="name-box">
-                <div class="name">{{ CHART.name }}<i class="iconfont icon-weibiaoti520"></i></div>
+                <div class="name">{{ CHART.name }}
+                    <!-- <i class="iconfont icon-weibiaoti520"></i> -->
+                </div>
             </div>
         </div>
         <div class="right">
