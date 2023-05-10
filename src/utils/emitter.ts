@@ -14,6 +14,7 @@ type Events = {
     startDownload: string
     endDownload: object
     updateChartPlayState: boolean
+    chartLoading: boolean
 }
 
 const emitter: Emitter<Events> = mitt<Events>()

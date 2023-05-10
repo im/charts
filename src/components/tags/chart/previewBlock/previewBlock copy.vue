@@ -18,26 +18,28 @@
 </template>
 
 <script lang="ts" setup>
-// https://github.com/ecomfe/vue-echarts
-// https://blog.csdn.net/qq_43953273/article/details/121085281
-
-import { onMounted, computed, inject, watch, nextTick, onUnmounted } from 'vue'
+import { onMounted, computed, inject, nextTick, onUnmounted } from 'vue'
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'
 import westeros from '@/theme/westeros'
+import emitter from '@/utils/emitter'
 import { use, registerTheme } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
-import { TitleComponent,TooltipComponent,LegendComponent,GridComponent } from 'echarts/components'
+import {
+    TitleComponent,
+    TooltipComponent,
+    LegendComponent,
+    GridComponent
+} from 'echarts/components'
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 import { createOption } from '@/chart/option'
 import { DYNAMIC_PREFIX } from '@/constants/prefix'
 import { createDynamicOption } from '@/chart/dynamicOption'
-import { start, stop, runState, download , clear } from './chart'
-import emitter from '@/utils/emitter'
 // @ts-ignore
 import gifshot from 'gifshot'
+
 use([
     GridComponent,
     CanvasRenderer,
@@ -49,26 +51,41 @@ use([
     LegendComponent
 ])
 registerTheme('westeros', westeros)
-provide(THEME_KEY, 'westeros')
 
 const CHART = injectStrict(ChartKey)
-const isDynamic = computed(() => ~CHART.value.type.indexOf(DYNAMIC_PREFIX))
+// https://github.com/ecomfe/vue-echarts
+// https://blog.csdn.net/qq_43953273/article/details/121085281
+
+emitter.on('chartRun', (frameIndex) => {
+    nextTick(() => {
+        const setOption = chartRef.value?.setOption
+        setOption && setOption(createDynamicOption(CHART.value, frameIndex))
+    })
+})
+
+let loopTimer:any = null
+let imageList:any = []
+// 防止不是下载也会触发结束事件
+const isStartDownload = ref(false)
+
+provide(THEME_KEY, 'westeros')
+
 const chartRef:any = ref(null)
 const play = ref(false)
-const isStartDownload = ref(false)
-let imageList:any = []
-let loopTimer:any = null
 
-watch(() => runState.value, (state) => {
-    play.value = state === 'start'
-
-    if (isStartDownload.value && state === 'end') {
-        createGIF()
+const handlePlay = () => {
+    if (play.value) {
+        emitter.emit('chartStop')
+    } else {
+        emitter.emit('chartStart')
     }
+}
 
-}, {
-    deep: true
+emitter.on('updateChartPlayState', state => {
+    play.value = state
 })
+
+const isDynamic = computed(() => ~CHART.value.type.indexOf(DYNAMIC_PREFIX))
 
 const option:any = computed(() => {
     if (CHART?.value.id) {
@@ -77,18 +94,6 @@ const option:any = computed(() => {
         return {}
     }
 })
-
-const handlePlay = () => {
-    play.value = !play.value
-    play.value ? start(CHART.value, setOption) : stop()
-}
-
-const setOption = (frameIndex:number) => {
-    nextTick(() => {
-        const setOption = chartRef.value?.setOption
-        setOption && setOption(createDynamicOption(CHART.value, frameIndex))
-    })
-}
 
 const downloadGif = () => {
     imageList = []
@@ -102,7 +107,7 @@ const downloadGif = () => {
     }, 100)
 }
 
-const createGIF = () => {
+emitter.on('chartEnd', () => {
     clearInterval(loopTimer)
     if (!imageList.length || !isStartDownload.value) return
     gifshot.createGIF({
@@ -112,43 +117,45 @@ const createGIF = () => {
         images: imageList,
     }, (obj:any) => {
         if (!obj.error) {
-            const src = obj.image
-            console.log('src: ', src)
-            download(CHART.value, src, 'gif')
+            const image = obj.image
+            emitter.emit('endDownload', {
+                image: image,
+                suffix: 'gif'
+            })
             imageList = []
-            emitter.emit('chartLoading', false)
         }
     })
     isStartDownload.value = false
-}
+})
 
 emitter.on('handleChart', (command) => {
     if (isDynamic.value) {
-        emitter.emit('chartLoading', true)
-        clear()
-        start(CHART.value, setOption)
         isStartDownload.value = true
+        emitter.emit('startDownload', '')
+        emitter.emit('chartStart')
         downloadGif()
     } else {
+        emitter.emit('startDownload', '')
+
         nextTick(() => {
-            emitter.emit('chartLoading', true)
             const src = chartRef.value?.getDataURL({
                 type: 'png',
                 pixelRatio: 10,
                 backgroundColor: '#fff'
             })
-            download(CHART.value, src, 'png')
 
-            setTimeout(() => {
-                emitter.emit('chartLoading', false)
-            }, 1000)
+            emitter.emit('endDownload', {
+                image: src,
+                suffix: 'png'
+            })
         })
+
     }
 })
 
 onUnmounted(() => {
-    imageList = []
     clearInterval(loopTimer)
+    isStartDownload.value = false
 })
 
 </script>
