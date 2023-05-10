@@ -24,6 +24,15 @@ export const getColor = (chart:ChartObject) => {
     }
 }
 
+export const getTooltip = (chart:ChartObject) => {
+    const isAxis = !(checkChartType(chart, 'pie') || checkChartType(chart, 'ring'))
+    return {
+        tooltip: {
+            trigger: isAxis ? 'axis' : 'item'
+        }
+    }
+}
+
 export const getBackgroundColor = (chart:ChartObject) => {
     const color = chart?.config?.backgroundColor || '#ffffff'
     return {

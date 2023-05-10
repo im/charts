@@ -2,7 +2,7 @@ import { ChartObject, ChartType } from '@/typings/chart'
 // @ts-ignore
 import _ from 'loadsh'
 import OPTIONS from './options'
-import { getColor, getTitle, checkChartType, getLegend, getBackgroundColor } from './utils'
+import { getColor, getTitle, checkChartType, getLegend, getBackgroundColor, getTooltip } from './utils'
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
@@ -139,6 +139,7 @@ export function createDynamicOption (data:ChartObject, frameIndex:number) {
     const title = getTitle(chart)
     const color = getColor(chart)
     const backgroundColor = getBackgroundColor(chart)
+    const tooltip = getTooltip(chart)
 
     const option = {
         ...color,
@@ -148,15 +149,11 @@ export function createDynamicOption (data:ChartObject, frameIndex:number) {
         ...legend,
         ...title,
         ...backgroundColor,
+        ...tooltip,
         animationDuration: animation.moveTime * 1000,
         // animationDurationUpdate: 6000,
         animationEasing: 'linear',
         animationEasingUpdate: 'linear',
-        grid: {
-        },
-        tooltip: {
-            trigger: 'item',
-        },
     }
     return option
 }
