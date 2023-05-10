@@ -28,7 +28,7 @@ import westeros from '@/theme/westeros'
 import { use, registerTheme } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
 import { PieChart, LineChart, BarChart } from 'echarts/charts'
-import { TitleComponent,TooltipComponent,LegendComponent,GridComponent } from 'echarts/components'
+import { TitleComponent,TooltipComponent,LegendComponent,GridComponent, MarkPointComponent } from 'echarts/components'
 import VChart, { THEME_KEY } from 'vue-echarts'
 import { ref, provide } from 'vue'
 import { createOption } from '@/chart/option'
@@ -46,7 +46,8 @@ use([
     BarChart,
     TitleComponent,
     TooltipComponent,
-    LegendComponent
+    LegendComponent,
+    MarkPointComponent
 ])
 registerTheme('westeros', westeros)
 provide(THEME_KEY, 'westeros')

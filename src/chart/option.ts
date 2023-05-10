@@ -47,12 +47,12 @@ const getSeries = (chart:ChartObject) => {
                 type: chartType,
                 // stack: 'Total',
                 data: [],
-                markPoint: {
-                    data: [
-                        { type: 'max', name: 'Max' },
-                        { type: 'min', name: 'Min' }
-                    ]
-                }
+                // markPoint: {
+                //     data: [
+                //         { type: 'max', name: 'Max' },
+                //         { type: 'min', name: 'Min' }
+                //     ]
+                // }
             }
             for (let i = 1; i < chartData.length; i++) {
                 const item:any = chartData[i]
@@ -141,6 +141,5 @@ export function createOption (data:ChartObject) {
         ...backgroundColor,
         ...tooltip,
     }
-    console.log('option: ', option)
     return option
 }
