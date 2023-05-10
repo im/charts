@@ -1,3 +1,6 @@
 export default {
-    type: 'DYNAMIC_RANKING_BAR'
+    series: {
+        type: 'bar',
+        barMaxWidth: 40,
+    }
 }

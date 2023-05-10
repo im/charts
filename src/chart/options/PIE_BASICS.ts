@@ -1,3 +1,6 @@
 export default {
-    type: 'pie'
+    series: {
+        type: 'pie',
+        radius: '50%',
+    }
 }

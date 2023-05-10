@@ -21,6 +21,10 @@ export const CHART_TYPE_MAP = {
         label: '基础折线图',
         icon: 'icon-zhexiantu'
     },
+    [`${LINE_PREFIX}STEP`]: {
+        label: '阶梯折线图',
+        icon: 'icon-zhexiantu'
+    },
     [`${PIE_PREFIX}BASICS`]: {
         label: '基础饼图',
         icon: 'icon-bingtu'

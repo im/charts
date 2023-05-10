@@ -1,3 +1,5 @@
 export default {
-    type: 'bar'
+    series: {
+        type: 'bar'
+    }
 }

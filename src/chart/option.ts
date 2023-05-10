@@ -6,8 +6,7 @@ import { getColor, getTitle, checkChartType, getLegend, getBackgroundColor, getT
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
-    const chartType = OPTIONS[type]?.type
-    return !!['bar', 'line'].includes(chartType)
+    return !!['BAR_BASICS', 'LINE_BASICS', 'LINE_STEP'].includes(type)
 }
 
 const getXAxis = (chart:ChartObject) => {
@@ -32,27 +31,19 @@ const getSeries = (chart:ChartObject) => {
     const { config, type } = chart
     const { data = [] } = config
     const chartOption = OPTIONS[type]
-    const chartType = chartOption.type
 
     const series:any = []
 
     const chartData = _.cloneDeep(data)
 
-    if (checkChartType(chart, 'line') || checkChartType(chart, 'bar')) {
+    if (checkChartType(chart, 'BAR_BASICS') || checkChartType(chart, 'LINE_BASICS') || checkChartType(chart, 'LINE_STEP')) {
         chartData[0].shift()
         const names = chartData[0]
         names.forEach((name: string, index: number) => {
             const obj:any = {
                 name,
-                type: chartType,
-                // stack: 'Total',
-                data: [],
-                // markPoint: {
-                //     data: [
-                //         { type: 'max', name: 'Max' },
-                //         { type: 'min', name: 'Min' }
-                //     ]
-                // }
+                ...chartOption.series,
+                data: []
             }
             for (let i = 1; i < chartData.length; i++) {
                 const item:any = chartData[i]
@@ -60,38 +51,13 @@ const getSeries = (chart:ChartObject) => {
             }
             series.push(obj)
         })
-        console.log('series: ', series)
     }
 
-    if (checkChartType(chart, 'pie')) {
+    if (checkChartType(chart, 'PIE_BASICS') || checkChartType(chart, 'RING_BASICS')) {
         const obj:any = {
             name: chartData.shift()[0],
-            radius: '50%',
+            ...chartOption.series,
             data: [],
-            type: chartType
-        }
-        chartData.forEach((item:any) => {
-            const [name, value] = item
-            obj.data.push({
-                value,
-                name
-            })
-        })
-        series.push(obj)
-    }
-
-    if (checkChartType(chart, 'ring')) {
-        const obj:any = {
-            name: chartData.shift()[0],
-            data: [],
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 2
-            },
-            type: 'pie'
         }
         chartData.forEach((item:any) => {
             const [name, value] = item
@@ -141,5 +107,6 @@ export function createOption (data:ChartObject) {
         ...backgroundColor,
         ...tooltip,
     }
+    console.log('option: ', option)
     return option
 }

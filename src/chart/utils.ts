@@ -42,8 +42,7 @@ export const getBackgroundColor = (chart:ChartObject) => {
 
 export const checkChartType = (chart:ChartObject, chartType: vChartType | ChartType) => {
     const { type } = chart
-    const optionType = OPTIONS[type].type
-    return optionType === chartType
+    return type === chartType
 }
 
 export const getLegend = (chart:ChartObject) => {

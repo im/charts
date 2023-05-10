@@ -6,8 +6,7 @@ import { getColor, getTitle, checkChartType, getLegend, getBackgroundColor, getT
 
 const isShowAxis = (chart:ChartObject) => {
     const { type } = chart
-    const chartType = OPTIONS[type]?.type
-    return !!['DYNAMIC_RANKING_BAR'].includes(chartType)
+    return !!['DYNAMIC_RANKING_BAR'].includes(type)
 }
 
 const getXAxis = (chart:ChartObject) => {
@@ -53,7 +52,6 @@ const getSeries = (chart:ChartObject) => {
     const { config, type } = chart
     const { data = [] } = config
     const chartOption = OPTIONS[type]
-    const chartType = chartOption.type
 
     const series:any = []
 
@@ -65,8 +63,7 @@ const getSeries = (chart:ChartObject) => {
         names.forEach((name: string, index: number) => {
             const obj:any = {
                 name,
-                type: 'bar',
-                barMaxWidth: 40,
+                ...chartOption.series,
                 data: []
             }
             for (let i = 1; i < chartData.length; i++) {
@@ -81,14 +78,7 @@ const getSeries = (chart:ChartObject) => {
         const obj:any = {
             name: chartData.shift()[0],
             data: [],
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-                borderRadius: 10,
-                borderColor: '#fff',
-                borderWidth: 2
-            },
-            type: 'pie'
+            ...chartOption.series,
         }
         chartData.forEach((item:any) => {
             const [name, value] = item
@@ -151,7 +141,6 @@ export function createDynamicOption (data:ChartObject, frameIndex:number) {
         ...backgroundColor,
         ...tooltip,
         animationDuration: animation.moveTime * 1000,
-        // animationDurationUpdate: 6000,
         animationEasing: 'linear',
         animationEasingUpdate: 'linear',
     }

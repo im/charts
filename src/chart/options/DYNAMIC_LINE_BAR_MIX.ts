@@ -1,3 +1,6 @@
 export default {
-    type: 'bar'
+    series: {
+        type: 'bar',
+        barMaxWidth: 40,
+    }
 }

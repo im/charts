@@ -12,8 +12,17 @@
     title="图表模版"
     :before-close="handleClose">
         <div class="container">
-            <div v-for="chartType in chartTypes" :key="chartType.value" class="chart-list">
-                <!-- <el-divider content-position="left">{{ chartType.label }}</el-divider> -->
+            <div v-for="chart in chartTypes" :key="chart.value" class="chart-block" @click="handleChart(chart)">
+                <div class="tag">{{ chart.parentLabel }}</div>
+                <div class="preview">
+                    <PreviewImage :chart="chart" />
+                </div>
+                <div class="name-box">
+                    {{ chart.label }}
+                </div>
+            </div>
+            <!-- <div v-for="chartType in chartTypes" :key="chartType.value" class="chart-list">
+                <el-divider content-position="left">{{ chartType.label }}</el-divider>
                 <div class="chart-wrapper">
                     <div v-for="chart in chartType.children" :key="chart.value" class="chart-block" @click="handleChart(chart)">
                         <div class="tag">{{ chartType.label }}</div>
@@ -25,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
   </el-dialog>
 </template>
@@ -39,9 +48,21 @@ import { useRouter, useRoute } from 'vue-router'
 import { createConfig } from '@/chart/config'
 import { ChartTypeObject, ChartObject } from '@/typings/chart'
 
-const router = useRouter()
 const emits = defineEmits(['close'])
-const chartTypes = ref(getChartTypes())
+const chartTypes = computed(() => {
+    const types = getChartTypes()
+    return types.reduce((acc:any,cur) => {
+        const children = cur.children || []
+        const results:any = children.map(v => {
+            return {
+                ...v,
+                parentLabel: cur.label
+            }
+        })
+        acc = acc.concat(results)
+        return acc
+    }, [])
+})
 const chartStore = useChartStore()
 const handleClose = () => {
     emits('close')
@@ -56,24 +77,7 @@ const handleChart = async (chart:ChartTypeObject) => {
         config: createConfig(chart)
     }
     const id = await chartStore.set(chartData)
-    // router.push({
-    //     name: 'chart',
-    //     params: {
-    //         id
-    //     }
-    // })
-    // const { href } = router.resolve({
-    //     name: 'chart',
-    //     params: {
-    //         id
-    //     }
-    // })
-    // const { origin, pathname } = window.location
-    // const url = origin + pathname + href
-    // window.open(url, '_blank')
-    nextTick(() => {
-        handleClose()
-    })
+    handleClose()
 }
 
 </script>
