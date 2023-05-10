@@ -23,7 +23,7 @@ export const CHART_TYPE_MAP = {
     },
     [`${LINE_PREFIX}STEP`]: {
         label: '阶梯折线图',
-        icon: 'icon-zhexiantu'
+        icon: 'icon-jietizhexiantu'
     },
     [`${PIE_PREFIX}BASICS`]: {
         label: '基础饼图',
@@ -31,11 +31,11 @@ export const CHART_TYPE_MAP = {
     },
     [`${PIE_PREFIX}ROSE`]: {
         label: '南丁格尔玫瑰图',
-        icon: 'icon-bingtu'
+        icon: 'icon-nandinggeermeiguitu'
     },
     [`${PIE_PREFIX}PATTERN`]: {
         label: '纹理饼图',
-        icon: 'icon-bingtu'
+        icon: 'icon-pie-chart-full'
     },
     [`${BAR_PREFIX}BASICS`]: {
         label: '基础柱状图',

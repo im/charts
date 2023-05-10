@@ -71,6 +71,12 @@ watch(() => runState.value, (state) => {
     deep: true
 })
 
+watch(() => CHART.value.config, (state) => {
+    clear()
+}, {
+    deep: true
+})
+
 const option:any = computed(() => {
     if (CHART?.value.id) {
         return isDynamic.value ? createDynamicOption(CHART.value, 0) : createOption(CHART.value)

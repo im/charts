@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4029337 */
-  src: url('iconfont.woff2?t=1683627188817') format('woff2'),
-       url('iconfont.woff?t=1683627188817') format('woff'),
-       url('iconfont.ttf?t=1683627188817') format('truetype');
+  src: url('iconfont.woff2?t=1683705103603') format('woff2'),
+       url('iconfont.woff?t=1683705103603') format('woff'),
+       url('iconfont.ttf?t=1683705103603') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-nandinggeermeiguitu:before {
+  content: "\e851";
+}
+
+.icon-pie-chart-full:before {
+  content: "\e8c1";
+}
+
+.icon-jietizhexiantu:before {
+  content: "\e6bb";
 }
 
 .icon-weibiaoti519:before {

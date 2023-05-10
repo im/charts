@@ -26,6 +26,24 @@
         </div>
         <div class="right">
             <div class="operation">
+                <el-popover
+                    placement="bottom"
+                    :width="700"
+                    trigger="click"
+                    content="">
+                    <div class="data-table-wrapper">
+                        <DataTable />
+                    </div>
+                    <template #reference>
+                        <div class="item">
+                        <div>
+                            <i class="iconfont icon-weibiaoti520"></i>
+                            <div class="text">编辑数据</div>
+                        </div>
+                    </div>
+                    </template>
+                </el-popover>
+
                 <div class="item" @click="handleChart('download')">
                     <div>
                         <i class="iconfont icon-xiazai"></i>
@@ -40,6 +58,7 @@
 <script lang="ts" setup>
 import { computed, defineProps, inject, onMounted } from 'vue'
 import emitter from '@/utils/emitter'
+import DataTable from '@/components/tags/chart/dataTable'
 
 import { ChartKey } from '@/utils/symbols'
 import injectStrict from '@/utils/injectStrict'

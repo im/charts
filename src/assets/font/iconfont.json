@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15872322",
+      "name": "南丁格尔玫瑰图",
+      "font_class": "nandinggeermeiguitu",
+      "unicode": "e851",
+      "unicode_decimal": 59473
+    },
+    {
+      "icon_id": "18166426",
+      "name": "饼图,统计图",
+      "font_class": "pie-chart-full",
+      "unicode": "e8c1",
+      "unicode_decimal": 59585
+    },
+    {
+      "icon_id": "22761394",
+      "name": "阶梯折线图",
+      "font_class": "jietizhexiantu",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
       "icon_id": "980894",
       "name": "暂停",
       "font_class": "weibiaoti519",

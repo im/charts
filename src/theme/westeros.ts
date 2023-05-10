@@ -22,7 +22,7 @@ export default {
             'borderWidth': '2'
         },
         'lineStyle': {
-            'width': '2'
+            'width': '3'
         },
         'symbolSize': '6',
         'symbol': 'circle',

@@ -12,7 +12,7 @@
     title="图表模版"
     :before-close="handleClose">
         <div class="container">
-            <div v-for="chart in chartTypes" :key="chart.value" class="chart-block" @click="handleChart(chart)">
+            <div v-for="chart in chartTypes" :key="chart.value" class="chart-wrapper" @click="handleChart(chart)">
                 <div class="tag">{{ chart.parentLabel }}</div>
                 <div class="preview">
                     <PreviewImage :chart="chart" />

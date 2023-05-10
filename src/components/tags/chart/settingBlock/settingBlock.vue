@@ -7,12 +7,12 @@
 
 <template>
     <div class="setting-block">
-       <div class="tabs">
-            <div v-for="item in viewList" :key="item.value" class="item" :class="{ active: view === item.value }" @click="handleView(item.value)">{{ item.label }}</div>
-       </div>
-       <div v-if="view === 'data'" class="data-table">
+       <!-- <div class="tabs">
+            <div v-for="item in viewList" :key="item.value" class="item" :class="{ active: view === item.value }">{{ item.label }}</div>
+       </div> -->
+       <!-- <div v-if="view === 'data'" class="data-table">
             <DataTable></DataTable>
-       </div>
+       </div> -->
 
        <div v-show="view === 'setting'" class="chart-setting">
             <Setting></Setting>
@@ -38,10 +38,12 @@ type viewObj = {
 const viewList: Array<viewObj> = [{
     value: 'setting',
     label: '编辑图表'
-}, {
-    value: 'data',
-    label: '编辑数据'
-}]
+},
+// {
+//     value: 'data',
+//     label: '编辑数据'
+// }
+]
 
 const view = ref('setting')
 
