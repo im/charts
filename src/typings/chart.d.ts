@@ -7,6 +7,8 @@ export type ChartType = 'DYNAMIC_RANKING_BAR'
 | 'LINE_STEP'
 | 'BAR_BASICS'
 | 'PIE_BASICS'
+| 'PIE_ROSE'
+| 'PIE_PATTERN'
 | 'RING_BASICS'
 
 export type vChartType = 'bar' | 'line' | 'pie' | 'ring'

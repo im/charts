@@ -29,6 +29,14 @@ export const CHART_TYPE_MAP = {
         label: '基础饼图',
         icon: 'icon-bingtu'
     },
+    [`${PIE_PREFIX}ROSE`]: {
+        label: '南丁格尔玫瑰图',
+        icon: 'icon-bingtu'
+    },
+    [`${PIE_PREFIX}PATTERN`]: {
+        label: '纹理饼图',
+        icon: 'icon-bingtu'
+    },
     [`${BAR_PREFIX}BASICS`]: {
         label: '基础柱状图',
         icon: 'icon-chartcolumn'
@@ -39,7 +47,7 @@ export const CHART_TYPE_MAP = {
     },
 }
 
-const PIE_CHARTS = [`${PIE_PREFIX}BASICS`,`${RING_PREFIX}BASICS`,]
+const PIE_CHARTS = [`${PIE_PREFIX}BASICS`,`${RING_PREFIX}BASICS`, `${PIE_PREFIX}ROSE`, `${PIE_PREFIX}PATTERN`]
 
 export const chartTypeOptions = Object.keys(CHART_TYPE_MAP).map(key => ({ label: CHART_TYPE_MAP[key].label, icon: CHART_TYPE_MAP[key].icon, value: key as ChartType }))
 

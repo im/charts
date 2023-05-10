@@ -35,6 +35,15 @@ export const getTooltip = (chart:ChartObject) => {
 
 export const getBackgroundColor = (chart:ChartObject) => {
     const color = chart?.config?.backgroundColor || '#ffffff'
+    const { type } = chart
+    const chartOption:any = OPTIONS[type]
+    if (chartOption?.backgroundColor) {
+        return {
+            backgroundColor: {
+                ...chartOption?.backgroundColor
+            }
+        }
+    }
     return {
         backgroundColor: color
     }

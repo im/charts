@@ -21,20 +21,6 @@
                     {{ chart.label }}
                 </div>
             </div>
-            <!-- <div v-for="chartType in chartTypes" :key="chartType.value" class="chart-list">
-                <el-divider content-position="left">{{ chartType.label }}</el-divider>
-                <div class="chart-wrapper">
-                    <div v-for="chart in chartType.children" :key="chart.value" class="chart-block" @click="handleChart(chart)">
-                        <div class="tag">{{ chartType.label }}</div>
-                        <div class="preview">
-                            <PreviewImage :chart="chart" />
-                        </div>
-                        <div class="name-box">
-                            {{ chart.label }}
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
   </el-dialog>
 </template>
@@ -44,7 +30,6 @@ import { computed, defineEmits, onMounted, ref, nextTick } from 'vue'
 import PreviewImage from '@/components/tags/previewImage'
 import { getChartTypes } from '@/constants/chartType'
 import { useChartStore } from '@/stores/chart'
-import { useRouter, useRoute } from 'vue-router'
 import { createConfig } from '@/chart/config'
 import { ChartTypeObject, ChartObject } from '@/typings/chart'
 

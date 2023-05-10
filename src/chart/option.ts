@@ -53,7 +53,7 @@ const getSeries = (chart:ChartObject) => {
         })
     }
 
-    if (checkChartType(chart, 'PIE_BASICS') || checkChartType(chart, 'RING_BASICS')) {
+    if (checkChartType(chart, 'PIE_BASICS') || checkChartType(chart, 'RING_BASICS') || checkChartType(chart, 'PIE_PATTERN') || checkChartType(chart, 'PIE_ROSE')) {
         const obj:any = {
             name: chartData.shift()[0],
             ...chartOption.series,
