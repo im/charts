@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "587100",
+      "name": "sequence-v",
+      "font_class": "sequencev",
+      "unicode": "e7f4",
+      "unicode_decimal": 59380
+    },
+    {
+      "icon_id": "1718340",
+      "name": "日历19",
+      "font_class": "rili",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "11195054",
+      "name": "时钟",
+      "font_class": "shizhong",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
       "icon_id": "11175682",
       "name": "分享",
       "font_class": "fenxiang",
